@@ -14,12 +14,15 @@ interface GoldCardProps {
   className?: string;
   /** HTML id for the card element */
   id?: string;
+  /** Inline styles */
+  style?: React.CSSProperties;
 }
 
-export function GoldCard({ children, topAccent = false, className = "", id }: GoldCardProps) {
+export function GoldCard({ children, topAccent = false, className = "", id, style }: GoldCardProps) {
   return (
     <div
       id={id}
+      style={style}
       className={`group relative rounded-2xl border border-[#C9A227]/15 bg-[#111111]
         hover:border-[#C9A227]/40 hover:bg-[#141414]
         transition-all duration-500

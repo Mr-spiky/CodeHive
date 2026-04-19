@@ -6,13 +6,13 @@ export function SponsorSection() {
   const logos = [...SPONSOR_LOGOS, ...SPONSOR_LOGOS];
 
   return (
-    <section className="py-2 border-y border-[#C9A227]/15 bg-[#060606] overflow-hidden relative">
+    <section className="py-5 border-y border-[#C9A227]/15 bg-[#060606] overflow-hidden relative">
       {/* Left/Right fading gradients to blend the marquee smoothly */}
       <div className="absolute top-0 left-0 bottom-0 w-24 bg-gradient-to-r from-[#060606] to-transparent z-10 pointer-events-none" />
       <div className="absolute top-0 right-0 bottom-0 w-24 bg-gradient-to-l from-[#060606] to-transparent z-10 pointer-events-none" />
 
       {/* Marquee Track */}
-      <div className="flex w-[200%] animate-marquee items-center group">
+      <div className="flex w-[100%] animate-marquee items-center group">
         {logos.map((logo, index) => (
           <div
             key={`${logo.name}-${index}`}
@@ -23,7 +23,7 @@ export function SponsorSection() {
                 src={logo.src}
                 alt={logo.name}
                 fill
-                className="object-contain border-2 border-red-500"
+                className="object-contain w-900px"
               />
             </div>
           </div>

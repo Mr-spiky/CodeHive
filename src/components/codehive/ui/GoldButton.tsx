@@ -19,11 +19,12 @@ interface GoldButtonLinkProps extends GoldButtonBaseProps {
   href: string;
   target?: string;
   rel?: string;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement> | (() => void);
 }
 
 interface GoldButtonActionProps extends GoldButtonBaseProps {
   as: "button";
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLButtonElement> | (() => void);
   type?: "button" | "submit" | "reset";
   href?: never;
 }
@@ -56,6 +57,7 @@ export function GoldButton(props: GoldButtonProps) {
       href={props.href}
       target={props.target}
       rel={props.rel}
+      onClick={props.onClick}
       className={combinedClass}
     >
       {children}
