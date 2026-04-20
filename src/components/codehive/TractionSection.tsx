@@ -52,13 +52,13 @@ export function TractionSection() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <SectionHeader
-          badge="Early Traction"
+          badge="Community Impact"
           title={
             <>
-              Growing <GoldText>Fast</GoldText>, Impacting <GoldText>Deep</GoldText>
+              Real <GoldText>Growth</GoldText>, Real <GoldText>Results</GoldText>
             </>
           }
-          subtitle="In just a few months, CodeHive has made its mark across India's tech scene."
+          subtitle="We measure success by the actual impact created for our members."
         />
 
         {/* Big Stats Row */}

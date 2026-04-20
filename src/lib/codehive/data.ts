@@ -19,7 +19,7 @@ import type {
 
 // ─── Navigation ──────────────────────────────────────────────
 export const NAV_LINKS: NavLink[] = [
-  { label: "About",  href: "/#about"  },
+  { label: "About",  href: "/about"  },
   { label: "Groups", href: "/#groups" },
   { label: "Events", href: "/events" },
   { label: "Team",   href: "/team"   },
@@ -47,6 +47,7 @@ export const COMMUNITY_GROUPS: GroupItem[] = [
     id: "general",
     icon: "🌐",
     title: "General",
+    category: "Community • General",
     description: "Your main hub for all things CodeHive. Announcements, updates, and general community conversations.",
     members: "1200+",
   },
@@ -54,6 +55,7 @@ export const COMMUNITY_GROUPS: GroupItem[] = [
     id: "networking",
     icon: "🤝",
     title: "Networking",
+    category: "Career • Connections",
     description: "Connect with like-minded peers, professionals, and founders. Build your professional circle.",
     members: "800+",
   },
@@ -61,6 +63,7 @@ export const COMMUNITY_GROUPS: GroupItem[] = [
     id: "hackathons",
     icon: "⚡",
     title: "Hackathons",
+    category: "Building • Competition",
     description: "Stay ahead of every hackathon — Unstop, Devfolio, HackBaroda, Hack2Skill & more.",
     members: "600+",
   },
@@ -68,6 +71,7 @@ export const COMMUNITY_GROUPS: GroupItem[] = [
     id: "learning",
     icon: "📚",
     title: "Learning",
+    category: "Skills • Guidance",
     description: "Resources, tutorials, and study groups for Web Dev, AI, Cybersecurity, and DSA.",
     members: "900+",
   },
@@ -75,6 +79,7 @@ export const COMMUNITY_GROUPS: GroupItem[] = [
     id: "internships",
     icon: "💼",
     title: "Internships",
+    category: "Jobs • Opportunities",
     description: "Curated internship & job opportunities posted daily. Get early access to industry openings.",
     members: "1000+",
   },
@@ -82,6 +87,7 @@ export const COMMUNITY_GROUPS: GroupItem[] = [
     id: "help-debug",
     icon: "🛠️",
     title: "Help & Debugging",
+    category: "Support • Tech",
     description: "Stuck on a bug? Get quick help from the community. No question is too small or too complex.",
     members: "700+",
   },
@@ -95,21 +101,20 @@ export const BIG_STATS: BigStatItem[] = [
   { value: "3+",    label: "Collaborations",       sub: "Aayo, HackBaroda & more" },
 ];
 
-// ─── Traction — Achievement badges ───────────────────────────
+// ─── Community Impact (formerly Traction badges) ──────────────
 export const ACHIEVEMENTS: AchievementItem[] = [
-  { icon: "🎤", title: "Industry Session",   desc: "Hosted session by a Senior CTO with 25+ years of experience"       },
-  { icon: "🤝", title: "Aayo App",           desc: "Official collaboration with Aayo App for community events"          },
-  { icon: "🏆", title: "Elite Her Hackathon",desc: "Partner for Elite Her Hackathon — empowering women in tech"         },
-  { icon: "💻", title: "HackBaroda 2026",    desc: "Proud collaborator at HackBaroda 2026 — Gujarat's premier hackathon"},
-  { icon: "📈", title: "LinkedIn Growth",    desc: "Rapidly growing digital presence with increasing reach & engagement" },
+  { icon: "💼", title: "Career Acceleration", desc: "Members actively securing internships and roles in top tech companies."       },
+  { icon: "⚡", title: "Hackathon Triumphs",  desc: "High-performing teams continuously formed and competing in national hackathons." },
+  { icon: "🛠️", title: "Project Incubation",  desc: "Countless side-projects and portfolios built together through peer collaboration." },
+  { icon: "🤝", title: "Meaningful Network",  desc: "Direct connections established with founders, seniors, and industry experts." },
+  { icon: "📈", title: "Execution Only",      desc: "Zero fluff. Tangible skills acquired through hands-on guidance and execution." },
 ];
 
 // ─── What Makes CodeHive Different ───────────────────────────
 export const COMPARISONS: ComparisonItem[] = [
-  { not: "Not just webinars",     yes: "Execution-focused learning (build + implement)"        },
-  { not: "Not just networking",   yes: "Outcome-driven connections (internships, projects)"    },
-  { not: "Not just students",     yes: "Industry + student collaboration ecosystem"            },
-  { not: "Not just events",       yes: "Career acceleration platform"                          },
+  { not: "Just webinars",               yes: "Build + execute approach" },
+  { not: "Random networking",           yes: "Outcome-driven connections" },
+  { not: "No outcomes",                 yes: "Real growth" },
 ];
 
 // ─── Core Team ────────────────────────────────────────────────
@@ -124,7 +129,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
 
 // ─── Footer — Quick Links & Contact ───────────────────────────
 export const QUICK_LINKS: NavLink[] = [
-  { label: "About",  href: "/#about"  },
+  { label: "About",  href: "/about"  },
   { label: "Groups", href: "/#groups" },
   { label: "Events", href: "/events" },
   { label: "Team",   href: "/team"   },

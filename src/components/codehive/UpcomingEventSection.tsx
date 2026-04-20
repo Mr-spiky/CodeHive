@@ -3,7 +3,7 @@ import { EVENT_REGISTER_LINK, COMMUNITY_LINK } from "@/lib/codehive/constants";
 import { EVENT_TAGS } from "@/lib/codehive/data";
 
 // ─── UpcomingEventSection ─────────────────────────────────────
-export function UpcomingEventSection() {
+export function UpcomingEventSection({ isPreview = false }: { isPreview?: boolean }) {
   return (
     <section id="events" className="py-24 md:py-32 bg-[#060606] relative overflow-hidden">
       {/* Center glow */}
@@ -72,7 +72,7 @@ export function UpcomingEventSection() {
                     rel="noopener noreferrer"
                     className="px-8 py-3.5 text-sm"
                   >
-                    Register →
+                    Get Notified →
                   </GoldButton>
 
                   <p className="text-gray-600 text-xs">Registration opens soon</p>

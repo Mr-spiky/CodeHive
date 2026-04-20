@@ -126,7 +126,7 @@ export function HeroSection() {
         </div>
 
         {/* Headline */}
-        <h1 className="font-sora text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
+        <h1 className="font-sora text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-4 animate-fade-in-up tracking-tight">
           Build.{" "}
           <span className="relative inline-block">
             <GoldText className="animate-gradient-x">Connect.</GoldText>
@@ -135,22 +135,43 @@ export function HeroSection() {
           <br />
           <GoldText className="animate-gradient-x">with CodeHive.</GoldText>
         </h1>
+        
+        {/* Dynamic sub-heading */}
+        <h2 className="text-[#C9A227] text-xl md:text-2xl font-medium mb-8 animate-fade-in-up [animation-delay:0.2s]">
+          Where builders don't just learn — they ship.
+        </h2>
 
-        {/* Subtext */}
-        <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-          A fast-growing, student-led tech community bridging academic learning with real-world industry exposure.
-          Join India's most execution-driven tech ecosystem.
-        </p>
+        {/* Micro-Stats Strip */}
+        <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 mb-10 pb-6 border-b border-[#C9A227]/15 w-fit mx-auto animate-fade-in-up [animation-delay:0.4s]">
+          <div className="flex flex-col items-center">
+            <span className="text-2xl md:text-3xl font-sora font-semibold text-white">900+</span>
+            <span className="text-gray-400 text-xs font-medium tracking-wider uppercase mt-1">Members</span>
+          </div>
+          <div className="w-px h-10 bg-[#C9A227]/20" />
+          <div className="flex flex-col items-center">
+            <span className="text-2xl md:text-3xl font-sora font-semibold text-white">500+</span>
+            <span className="text-gray-400 text-xs font-medium tracking-wider uppercase mt-1">Registrations</span>
+          </div>
+          <div className="w-px h-10 bg-[#C9A227]/20 hidden sm:block" />
+          <div className="flex flex-col items-center w-full sm:w-auto mt-4 sm:mt-0">
+            <span className="text-2xl md:text-3xl font-sora font-semibold text-white">5+</span>
+            <span className="text-gray-400 text-xs font-medium tracking-wider uppercase mt-1">Collaborations</span>
+          </div>
+        </div>
 
         {/* CTAs */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <GoldButton id="hero-join-cta" href={COMMUNITY_LINK}>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-5 animate-fade-in-up [animation-delay:0.6s]">
+          <a
+            href={COMMUNITY_LINK}
+            id="hero-join-cta"
+            className="group relative px-10 py-4 text-lg font-bold text-[#0A0A0A] bg-gradient-to-r from-[#C9A227] to-[#E5C84A] rounded-full transition-all duration-300 hover:shadow-[0_0_50px_rgba(201,162,39,0.7)] hover:scale-105 active:scale-95"
+          >
             <span className="relative z-10">Join Community →</span>
-          </GoldButton>
+          </a>
           <a
             href="#about"
             id="hero-explore-cta"
-            className="px-8 py-3.5 text-base font-semibold text-white border border-white/20 rounded-full hover:border-[#C9A227]/50 hover:bg-[#C9A227]/10 transition-all duration-300 hover:scale-105 active:scale-95"
+            className="px-10 py-4 text-lg font-semibold text-white border border-[#C9A227]/40 rounded-full hover:border-[#C9A227] hover:bg-[#C9A227]/10 transition-all duration-300 hover:scale-105 active:scale-95"
           >
             Explore More
           </a>

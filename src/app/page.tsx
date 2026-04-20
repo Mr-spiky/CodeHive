@@ -2,10 +2,11 @@ import { Navbar } from "@/components/codehive/Navbar";
 import { HeroSection } from "@/components/codehive/HeroSection";
 import { SponsorSection } from "@/components/codehive/SponsorSection";
 import { AboutSection } from "@/components/codehive/AboutSection";
-import { VisionMissionSection } from "@/components/codehive/VisionMissionSection";
 import { CommunityGroupsSection } from "@/components/codehive/CommunityGroupsSection";
-import { TractionSection } from "@/components/codehive/TractionSection";
 import { WhatsCodeHiveDifferentSection } from "@/components/codehive/WhatsCodeHiveDifferentSection";
+import { TractionSection } from "@/components/codehive/TractionSection";
+import { UpcomingEventSection } from "@/components/codehive/UpcomingEventSection";
+import { CoreTeamSection } from "@/components/codehive/CoreTeamSection";
 import { Footer } from "@/components/codehive/Footer";
 
 export default function Home() {
@@ -15,10 +16,11 @@ export default function Home() {
       <HeroSection />
       <SponsorSection />
       <AboutSection />
-      <VisionMissionSection />
       <CommunityGroupsSection />
-      <TractionSection />
       <WhatsCodeHiveDifferentSection />
+      <TractionSection />
+      <UpcomingEventSection isPreview={true} />
+      <CoreTeamSection limit={4} isPreview={true} />
       <Footer />
     </main>
   );

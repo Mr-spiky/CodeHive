@@ -7,3 +7,4 @@ export { GoldCard }     from "./GoldCard";
 export { GoldButton }   from "./GoldButton";
 export { GoldText }     from "./GoldText";
 export { HexIcon }      from "./HexIcon";
+export { CurvedLoop }   from "./CurvedLoop";

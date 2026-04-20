@@ -25,6 +25,7 @@ export interface AchievementItem {
 export interface GroupItem {
   id: string;
   icon: string;
+  category?: string;
   title: string;
   description: string;
   members: string;

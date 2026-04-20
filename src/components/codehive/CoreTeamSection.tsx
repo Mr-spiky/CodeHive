@@ -53,7 +53,9 @@ function TeamCard({ member }: { member: TeamMember }) {
 }
 
 // ─── CoreTeamSection ──────────────────────────────────────────
-export function CoreTeamSection() {
+export function CoreTeamSection({ limit, isPreview = false }: { limit?: number; isPreview?: boolean }) {
+  const membersToDisplay = limit ? TEAM_MEMBERS.slice(0, limit) : TEAM_MEMBERS;
+  
   return (
     <section id="team" className="py-24 md:py-32 bg-[#0A0A0A] relative overflow-hidden">
       {/* Top glow */}
@@ -67,18 +69,33 @@ export function CoreTeamSection() {
               The People <GoldText>Behind</GoldText> CodeHive
             </>
           }
-          subtitle="A passionate, execution-driven team building something that matters."
+          subtitle={
+            isPreview 
+              ? "Built by passionate builders. A small team executing a big vision." 
+              : "A passionate, execution-driven team building something that matters."
+          }
         />
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {TEAM_MEMBERS.map((member) => (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {membersToDisplay.map((member) => (
             <TeamCard key={member.id} member={member} />
           ))}
         </div>
 
-        <p className="text-center text-gray-600 text-sm mt-10">
-          * Team details will be updated. Real names, photos, and LinkedIn links coming soon.
-        </p>
+        {isPreview ? (
+          <div className="text-center mt-12">
+            <a
+              href="/team"
+              className="inline-flex items-center gap-2 text-sm font-bold text-[#C9A227] hover:gap-3 transition-all duration-300 group-hover:text-[#E5C84A]"
+            >
+              Meet the Full Team →
+            </a>
+          </div>
+        ) : (
+          <p className="text-center text-gray-600 text-sm mt-10">
+            * Team details will be updated. Real names, photos, and LinkedIn links coming soon.
+          </p>
+        )}
       </div>
     </section>
   );

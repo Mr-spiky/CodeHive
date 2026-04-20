@@ -31,6 +31,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { ClickSpark } from "@/components/codehive/ui/ClickSpark";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -41,7 +43,9 @@ export default function RootLayout({
       <body
         className={`${sora.variable} ${inter.variable} antialiased bg-[#0A0A0A] text-white`}
       >
-        {children}
+        <ClickSpark sparkColor="#C9A227" sparkCount={8} duration={400}>
+          {children}
+        </ClickSpark>
       </body>
     </html>
   );
