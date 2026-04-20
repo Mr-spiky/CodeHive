@@ -1,5 +1,5 @@
 import { Navbar } from "@/components/codehive/Navbar";
-import { CoreTeamSection } from "@/components/codehive/CoreTeamSection";
+import { TeamTabs } from "@/components/codehive/TeamTabs";
 import { Footer } from "@/components/codehive/Footer";
 
 export const metadata = {
@@ -14,7 +14,7 @@ export default function TeamPage() {
       
       {/* Top padding to account for fixed navbar */}
       <div className="pt-20 flex-grow">
-        <CoreTeamSection />
+        <TeamTabs />
       </div>
 
       <Footer />
