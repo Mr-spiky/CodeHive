@@ -23,7 +23,8 @@ export function SponsorSection() {
                 src={logo.src}
                 alt={logo.name}
                 fill
-                className="object-contain w-900px"
+                sizes="128px"
+                className="object-contain"
               />
             </div>
           </div>
