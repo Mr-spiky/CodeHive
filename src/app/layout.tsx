@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Sora, Inter } from "next/font/google";
+import { ClickSpark } from "@/components/codehive/ui/ClickSpark";
 import "./globals.css";
 
 const sora = Sora({
@@ -24,14 +25,13 @@ export const metadata: Metadata = {
     "CodeHive", "tech community India", "student tech community Delhi NCR",
     "hackathons India", "coding community", "internships tech students",
   ],
+  icons: "/image/logo.png",
   openGraph: {
     title: "CodeHive — Build. Connect. Grow.",
     description: "India's most execution-driven student-led tech community. 2000+ active members.",
     type: "website",
   },
 };
-
-import { ClickSpark } from "@/components/codehive/ui/ClickSpark";
 
 export default function RootLayout({
   children,

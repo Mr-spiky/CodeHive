@@ -1,12 +1,13 @@
-import { SectionHeader, GoldText } from "./ui";
+import { SectionHeader } from "./ui";
 import { ACHIEVEMENTS, BIG_STATS } from "@/lib/codehive/data";
 import type { AchievementItem, BigStatItem } from "@/lib/codehive/types";
+import { DynamicIcon } from "../DynamicIcon";
 
 // ─── BigStatCard ──────────────────────────────────────────────
 function BigStatCard({ stat }: { stat: BigStatItem }) {
   return (
-    <div className="text-center p-6 rounded-2xl bg-[#111111] border border-[#C9A227]/15 hover:border-[#C9A227]/40 hover:bg-[#141414] transition-all duration-400 group">
-      <div className="font-sora text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-[#E5C84A] to-[#C9A227] mb-2">
+    <div className="text-center p-6 rounded-3xl bg-[#0D0D1F]/50 backdrop-blur-sm border border-[#7C3AED]/20 hover:border-[#06B6D4]/50 hover:bg-[#111122]/80 transition-all duration-500 group shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
+      <div className="font-sora text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-[#06B6D4] to-[#10B981] mb-2 group-hover:scale-105 transition-transform duration-300">
         {stat.value}
       </div>
       <div className="text-white font-semibold text-sm mb-1">{stat.label}</div>
@@ -19,18 +20,28 @@ function BigStatCard({ stat }: { stat: BigStatItem }) {
 function AchievementCard({
   achievement,
   isLastOdd,
+  index,
 }: {
   achievement: AchievementItem;
   isLastOdd: boolean;
+  index: number;
 }) {
+  const borderColors = [
+    "group-hover:border-l-[#7C3AED]", // Purple
+    "group-hover:border-l-[#06B6D4]", // Cyan
+    "group-hover:border-l-[#10B981]", // Emerald
+    "group-hover:border-l-[#EC4899]", // Pink
+  ];
+  const colorClass = borderColors[index % borderColors.length];
+
   return (
     <div
-      className={`group flex gap-4 p-5 rounded-2xl border border-[#C9A227]/10 bg-[#111111] hover:border-[#C9A227]/35 hover:bg-[#141414] transition-all duration-400 ${
+      className={`group flex gap-4 p-5 rounded-2xl border border-white/5 border-l-4 border-l-transparent bg-[#111122]/40 backdrop-blur-sm hover:bg-[#111122]/80 transition-all duration-500 ${colorClass} ${
         isLastOdd ? "sm:col-span-2 lg:col-span-1" : ""
       }`}
     >
-      <div className="w-10 h-10 rounded-xl bg-[#C9A227]/12 border border-[#C9A227]/20 flex items-center justify-center text-xl flex-shrink-0 group-hover:bg-[#C9A227]/20 transition-colors duration-300">
-        {achievement.icon}
+      <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 flex-shrink-0 group-hover:text-white group-hover:scale-110 transition-all duration-300">
+        <DynamicIcon name={achievement.icon} size={22} strokeWidth={1.5} />
       </div>
       <div>
         <div className="font-sora text-white font-semibold text-sm mb-1">{achievement.title}</div>
@@ -43,19 +54,19 @@ function AchievementCard({
 // ─── TractionSection ──────────────────────────────────────────
 export function TractionSection() {
   return (
-    <section className="py-24 md:py-32 bg-[#0A0A0A] relative overflow-hidden">
+    <section className="py-24 md:py-32 bg-[#05050F] relative overflow-hidden">
       {/* Background orbs */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/3 left-0 w-96 h-96 bg-[#C9A227]/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/3 right-0 w-96 h-96 bg-[#C9A227]/4 rounded-full blur-[120px]" />
+        <div className="absolute top-1/3 left-0 w-96 h-96 bg-[#7C3AED]/10 rounded-full blur-[150px]" />
+        <div className="absolute bottom-1/3 right-0 w-96 h-96 bg-[#06B6D4]/10 rounded-full blur-[150px]" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
         <SectionHeader
           badge="Community Impact"
           title={
             <>
-              Real <GoldText>Growth</GoldText>, Real <GoldText>Results</GoldText>
+              Real <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#06B6D4] to-[#10B981]">Growth</span>, Real <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#10B981] to-[#06B6D4]">Results</span>
             </>
           }
           subtitle="We measure success by the actual impact created for our members."
@@ -74,6 +85,7 @@ export function TractionSection() {
             <AchievementCard
               key={achievement.title}
               achievement={achievement}
+              index={i}
               isLastOdd={i === ACHIEVEMENTS.length - 1 && ACHIEVEMENTS.length % 2 !== 0}
             />
           ))}

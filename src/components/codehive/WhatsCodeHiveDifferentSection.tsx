@@ -1,81 +1,85 @@
-import { SectionHeader, GoldButton, GoldText } from "./ui";
+"use client";
+
+import { SectionHeader } from "./ui";
+import Link from "next/link";
 import { COMPARISONS } from "@/lib/codehive/data";
 import type { ComparisonItem } from "@/lib/codehive/types";
+import { DynamicIcon } from "../DynamicIcon";
+import { COMMUNITY_LINK } from "@/lib/codehive/constants";
 
-// ─── Icons ────────────────────────────────────────────────────
-function CrossIcon() {
+// ─── ComparisonCard ────────────────────────────────────────────
+function ComparisonCard({ item }: { item: ComparisonItem }) {
   return (
-    <svg className="w-3.5 h-3.5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-    </svg>
-  );
-}
-
-function CheckIcon() {
-  return (
-    <svg className="w-3.5 h-3.5 text-[#C9A227]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-    </svg>
-  );
-}
-
-// ─── ComparisonRow ────────────────────────────────────────────
-function ComparisonRow({ item }: { item: ComparisonItem }) {
-  return (
-    <div className="group grid md:grid-cols-2 gap-0 rounded-2xl overflow-hidden border border-[#C9A227]/10 hover:border-[#C9A227]/30 transition-all duration-400 hover:shadow-[0_0_30px_rgba(201,162,39,0.08)]">
-      {/* Left — the "not" side */}
-      <div className="flex items-center gap-4 px-6 py-5 bg-[#0F0F0F] group-hover:bg-[#111111] transition-colors duration-300 border-r border-[#C9A227]/10">
-        <div className="flex-shrink-0 w-7 h-7 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center">
-          <CrossIcon />
+    <div className="bg-[#0D0D1F]/40 border border-white/5 rounded-2xl p-6 md:p-8 hover:bg-[#0D0D1F]/80 transition-colors duration-300 flex flex-col h-full">
+      {/* Header */}
+      <div className="flex items-center gap-4 mb-8">
+        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-white border border-white/10">
+          <DynamicIcon name={item.icon} size={22} strokeWidth={1.5} />
         </div>
-        <span className="text-gray-500 text-sm line-through decoration-red-500/50 leading-relaxed">
-          {item.not}
-        </span>
+        <h3 className="font-sora text-xl font-bold text-white">
+          {item.title}
+        </h3>
       </div>
 
-      {/* Right — the "yes" side */}
-      <div className="flex items-center gap-4 px-6 py-5 bg-[#111111] group-hover:bg-[#141414] transition-colors duration-300">
-        <div className="flex-shrink-0 w-7 h-7 rounded-full bg-[#C9A227]/15 border border-[#C9A227]/30 flex items-center justify-center">
-          <CheckIcon />
+      {/* Comparison Grid */}
+      <div className="flex flex-col gap-6 flex-grow">
+        
+        {/* The "Not" Side (Average Community) */}
+        <div className="relative pl-6">
+          <span className="absolute left-0 top-0.5 text-red-500 font-bold text-lg leading-none">×</span>
+          <p className="text-gray-500 text-sm leading-relaxed">
+             {item.not}
+          </p>
         </div>
-        <span className="text-white text-sm font-medium leading-relaxed">{item.yes}</span>
+
+        {/* Divider */}
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+        {/* The "Yes" Side (CodeHive) */}
+        <div className="relative pl-6">
+          <span className="absolute left-0 top-0.5 text-[#10B981] font-bold text-lg leading-none">✓</span>
+          <p className="text-gray-200 text-sm font-medium leading-relaxed">
+             {item.yes}
+          </p>
+        </div>
+
       </div>
     </div>
   );
 }
 
-// ─── WhatsCodeHiveDifferentSection ───────────────────────────
 export function WhatsCodeHiveDifferentSection() {
   return (
-    <section className="py-24 md:py-32 bg-[#060606] relative overflow-hidden">
-      {/* Center glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[#C9A227]/5 rounded-full blur-[120px] pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+    <section className="py-20 bg-[#070711] relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
         <SectionHeader
           badge="What Makes Us Different"
           title={
             <>
-              We're Not Your <GoldText>Average</GoldText> Community
+              We're Not Your <span className="text-[#10B981]">Average</span> Community
             </>
           }
-          subtitle="This is where you stand out. Here's how CodeHive is different from every other community."
+          subtitle="This is where you stand out. See exactly why joining CodeHive accelerates your growth."
         />
 
-        <div className="max-w-4xl mx-auto space-y-4">
+        {/* 3-Column Grid Layout for Comparisons */}
+        <div className="grid md:grid-cols-3 gap-6 mt-16 max-w-6xl mx-auto">
           {COMPARISONS.map((item) => (
-            <ComparisonRow key={item.not} item={item} />
+            <ComparisonCard key={item.id} item={item} />
           ))}
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center mt-14">
-          <p className="text-gray-400 text-base mb-6">
-            Ready to be part of something that actually moves the needle?
-          </p>
-          <GoldButton href="#groups">
-            Join CodeHive Now →
-          </GoldButton>
+        <div className="text-center mt-16">
+          <Link 
+            href={COMMUNITY_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:border-[#10B981]/50 hover:bg-[#10B981]/10 text-white font-semibold text-sm transition-all group"
+          >
+            Join CodeHive Now 
+            <span className="group-hover:translate-x-1 transition-transform text-[#10B981]">→</span>
+          </Link>
         </div>
       </div>
     </section>

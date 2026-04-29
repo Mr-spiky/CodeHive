@@ -1,14 +1,8 @@
-// ─── HexIcon ──────────────────────────────────────────────────
-// Hexagonal SVG frame with an emoji or text inside.
-// Used in CoreTeamSection avatar and Navbar logo.
-//
-// Usage:
-//   <HexIcon emoji="🧠" size={64} />
-//   <HexIcon text="CH" size={40} />
+import { DynamicIcon } from "../../DynamicIcon";
 
 interface HexIconProps {
-  /** Emoji to display inside the hexagon */
-  emoji?: string;
+  /** Lucide icon name to display inside the hexagon */
+  icon?: string;
   /** Short text to display inside the hexagon (e.g., "CH" for logo) */
   text?: string;
   /** Size in pixels (both width and height) */
@@ -20,14 +14,14 @@ interface HexIconProps {
 }
 
 export function HexIcon({
-  emoji,
+  icon,
   text,
   size = 64,
   fontSize = 12,
   className = "",
 }: HexIconProps) {
   return (
-    <div className={`relative flex-shrink-0 ${className}`} style={{ width: size, height: size }}>
+    <div className={`relative flex-shrink-0 ${className} group`} style={{ width: size, height: size }}>
       <svg
         viewBox="0 0 64 64"
         className="absolute inset-0 w-full h-full"
@@ -65,10 +59,10 @@ export function HexIcon({
         )}
       </svg>
 
-      {/* Emoji overlay */}
-      {emoji && (
-        <div className="absolute inset-0 flex items-center justify-center text-2xl select-none">
-          {emoji}
+      {/* Icon overlay */}
+      {icon && (
+        <div className="absolute inset-0 flex items-center justify-center select-none text-[#C9A227]">
+          <DynamicIcon name={icon} size={size * 0.45} strokeWidth={1.5} />
         </div>
       )}
     </div>

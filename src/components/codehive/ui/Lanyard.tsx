@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unknown-property */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
@@ -139,10 +140,11 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
   const [dragged, drag] = useState<THREE.Vector3 | false>(false);
   const [hovered, hover] = useState(false);
 
-  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
-  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
-  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1]);
-  useSphericalJoint(j3, card, [
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  useRopeJoint(fixed as any, j1 as any, [[0, 0, 0], [0, 0, 0], 1]);
+  useRopeJoint(j1 as any, j2 as any, [[0, 0, 0], [0, 0, 0], 1]);
+  useRopeJoint(j2 as any, j3 as any, [[0, 0, 0], [0, 0, 0], 1]);
+  useSphericalJoint(j3 as any, card as any, [
     [0, 0, 0],
     [0, 1.5, 0],
   ]);
@@ -230,7 +232,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
             )}
             onPointerDown={(e: ThreeEvent<PointerEvent>) => {
               if (card.current) {
-                e.target.setPointerCapture(e.pointerId);
+                (e.target as Element & { setPointerCapture: (id: number) => void }).setPointerCapture(e.pointerId);
                 const currentTrans = card.current.translation();
                 drag(new THREE.Vector3().copy(e.point).sub(new THREE.Vector3(currentTrans.x, currentTrans.y, currentTrans.z)));
               }
@@ -256,7 +258,9 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
         </RigidBody>
       </group>
       <mesh ref={band}>
+        {/* @ts-ignore — meshline elements are registered via extend() but not in R3F's JSX types */}
         <meshLineGeometry />
+        {/* @ts-ignore */}
         <meshLineMaterial
           color="white"
           depthTest={false}

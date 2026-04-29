@@ -1,6 +1,7 @@
 import { SectionHeader, GoldCard, HexIcon, GoldText } from "./ui";
 import { TEAM_MEMBERS } from "@/lib/codehive/data";
 import type { TeamMember } from "@/lib/codehive/types";
+import Link from "next/link";
 
 // ─── LinkedInIcon ─────────────────────────────────────────────
 function LinkedInIcon() {
@@ -16,7 +17,7 @@ function TeamCard({ member }: { member: TeamMember }) {
   return (
     <GoldCard id={member.id} className="p-6">
       {/* Hexagonal avatar */}
-      <HexIcon emoji={member.emoji} size={64} className="mb-5" />
+      <HexIcon icon={member.icon} size={64} className="mb-5" />
 
       <h3 className="font-sora text-lg font-bold text-white mb-1">{member.name}</h3>
       <p className="text-[#C9A227]/80 text-sm font-medium mb-3">{member.role}</p>
@@ -84,12 +85,12 @@ export function CoreTeamSection({ limit, isPreview = false }: { limit?: number; 
 
         {isPreview ? (
           <div className="text-center mt-12">
-            <a
+            <Link
               href="/team"
               className="inline-flex items-center gap-2 text-sm font-bold text-[#C9A227] hover:gap-3 transition-all duration-300 group-hover:text-[#E5C84A]"
             >
               Meet the Full Team →
-            </a>
+            </Link>
           </div>
         ) : (
           <p className="text-center text-gray-600 text-sm mt-10">

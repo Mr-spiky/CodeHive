@@ -1,97 +1,85 @@
-import { SectionHeader, GoldButton, GoldText } from "./ui";
-import { EVENT_REGISTER_LINK, COMMUNITY_LINK } from "@/lib/codehive/constants";
-import { EVENT_TAGS } from "@/lib/codehive/data";
+import { SectionHeader } from "./ui";
+import { EVENTS } from "@/lib/codehive/eventsData";
+import Image from "next/image";
+import Link from "next/link";
+import { Calendar, MapPin } from "lucide-react";
 
-// ─── UpcomingEventSection ─────────────────────────────────────
-export function UpcomingEventSection({ isPreview = false }: { isPreview?: boolean }) {
+export function UpcomingEventSection() {
+  // Get the most recent upcoming event
+  const featuredEvent = EVENTS.find((e) => e.status === "upcoming") || EVENTS[0];
+
+  if (!featuredEvent) return null;
+
   return (
-    <section id="events" className="py-24 md:py-32 bg-[#060606] relative overflow-hidden">
-      {/* Center glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[200px] bg-[#C9A227]/8 blur-[100px] pointer-events-none" />
+    <section id="events" className="py-24 bg-[#08081A] relative overflow-hidden">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[200px] bg-[#7C3AED]/10 blur-[120px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
         <SectionHeader
           badge="Events"
           title={
             <>
-              Upcoming <GoldText>Events</GoldText>
+              Upcoming <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7C3AED] to-[#06B6D4]">Events</span>
             </>
           }
           subtitle="We run meetups, hackathons, and industry sessions. Stay tuned for what's next."
         />
 
-        <div className="max-w-3xl mx-auto">
-          {/* Event card */}
-          <div className="relative group rounded-3xl border border-[#C9A227]/20 bg-gradient-to-br from-[#111111] via-[#131313] to-[#0F0F0F] overflow-hidden hover:border-[#C9A227]/40 transition-all duration-500 hover:shadow-[0_0_60px_rgba(201,162,39,0.15)]">
-            {/* Top gold bar */}
-            <div className="h-1 w-full bg-gradient-to-r from-[#C9A227] via-[#E5C84A] to-[#C9A227]" />
+        <div className="max-w-5xl mx-auto">
+          <Link href={`/events/${featuredEvent.slug}`}>
+            <div className="group relative rounded-3xl border border-white/10 bg-[#0D0D1F]/60 backdrop-blur-md overflow-hidden hover:border-[#7C3AED]/50 transition-all duration-500 hover:shadow-[0_0_80px_rgba(124,58,237,0.15)] flex flex-col md:flex-row items-center cursor-pointer">
 
-            <div className="p-8 md:p-12">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
-
-                {/* Left — Event info */}
-                <div>
-                  {/* Coming soon badge */}
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C9A227]/15 border border-[#C9A227]/30 text-[#C9A227] text-xs font-bold tracking-widest uppercase mb-4">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#C9A227] animate-pulse" />
-                    Coming Soon
-                  </div>
-
-                  <h3 className="font-sora text-3xl font-bold text-white mb-3">
-                    CodeHive Meetup
-                  </h3>
-                  <p className="text-gray-400 text-base max-w-md leading-relaxed">
-                    Our next community event is being planned. Expect industry speakers,
-                    networking sessions, and execution-driven workshops. Details dropping soon.
-                  </p>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-3 mt-6">
-                    {EVENT_TAGS.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-3 py-1 text-xs font-medium text-gray-400 border border-white/10 rounded-full"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Right — Platform + CTA */}
-                <div className="flex flex-col items-center md:items-end gap-4 flex-shrink-0">
-                  <div className="text-center md:text-right">
-                    <div className="text-gray-500 text-xs uppercase tracking-widest mb-1">Platform</div>
-                    <div className="text-white font-semibold text-sm">Unstop / Hack2Skill</div>
-                  </div>
-
-                  <GoldButton
-                    id="event-register-cta"
-                    href={EVENT_REGISTER_LINK}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-8 py-3.5 text-sm"
-                  >
-                    Get Notified →
-                  </GoldButton>
-
-                  <p className="text-gray-600 text-xs">Registration opens soon</p>
-                </div>
-
+              {/* Image Section (Left) */}
+              <div className="relative w-full md:w-[450px] aspect-square flex-shrink-0 overflow-hidden bg-white/5">
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10" />
+                <Image
+                  src={featuredEvent.posterImage}
+                  alt={featuredEvent.title}
+                  fill
+                  className="object-cover transform group-hover:scale-105 transition-transform duration-700"
+                />
               </div>
-            </div>
-          </div>
 
-          {/* Hint text */}
-          <p className="text-center text-gray-600 text-sm mt-6">
-            Want to stay updated?{" "}
-            <a
-              href={COMMUNITY_LINK}
-              className="text-[#C9A227] hover:text-[#E5C84A] transition-colors font-medium"
-            >
-              Join our WhatsApp groups →
-            </a>
-          </p>
+              {/* Content Section (Right) */}
+              <div className="p-8 md:p-10 flex flex-col justify-center flex-grow relative">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[#7C3AED]/15 blur-3xl rounded-full" />
+
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#7C3AED]/10 border border-[#7C3AED]/20 text-[#A78BFA] text-xs font-bold tracking-widest uppercase mb-4 w-fit">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#A78BFA] animate-pulse" />
+                  Coming Soon
+                </div>
+
+                <h3 className="font-sora text-3xl font-bold text-white mb-2 group-hover:text-[#06B6D4] transition-colors">
+                  {featuredEvent.title}
+                </h3>
+
+                <p className="text-gray-400 text-sm mb-6 line-clamp-2">
+                  {featuredEvent.description}
+                </p>
+
+                <div className="flex flex-col gap-3 mb-8">
+                  <div className="flex items-center gap-3 text-gray-300 text-sm font-medium">
+                    <Calendar className="w-4 h-4 text-[#06B6D4]" />
+                    {featuredEvent.date}
+                  </div>
+                  <div className="flex items-center gap-3 text-gray-300 text-sm font-medium">
+                    <MapPin className="w-4 h-4 text-[#06B6D4]" />
+                    {featuredEvent.venue}
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between mt-auto pt-6 border-t border-white/5">
+                  <div className="text-white font-semibold text-sm">
+                    Unstop / Hack2Skill
+                  </div>
+                  <div className="text-[#06B6D4] font-semibold text-sm group-hover:translate-x-2 transition-transform flex items-center gap-2">
+                    View Event Details →
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </Link>
         </div>
       </div>
     </section>

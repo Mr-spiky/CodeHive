@@ -8,18 +8,42 @@
    CODEHIVE DESIGN TOKENS
    ============================================ */
 :root {
-  /* CodeHive Brand Colors */
-  --ch-gold: #C9A227;
-  --ch-gold-light: #E5C84A;
-  --ch-gold-muted: rgba(201, 162, 39, 0.15);
-  --ch-black: #0A0A0A;
-  --ch-surface: #111111;
-  --ch-surface-2: #1A1A1A;
-  --ch-border: rgba(201, 162, 39, 0.18);
+  /* CodeHive Brand Colors (New Community Theme) */
+  --ch-purple: #7C3AED;
+  --ch-cyan: #06B6D4;
+  --ch-emerald: #10B981;
+  --ch-pink: #EC4899;
+  --ch-gold: #C9A227; /* Kept for logo hover only */
+  
+  --ch-bg: #05050F;
+  --ch-surface: #0D0D1F;
+  --ch-surface-2: #14142B;
+  --ch-border: rgba(124, 58, 237, 0.15);
 
   /* CodeHive Fonts */
   --font-sora: var(--font-sora);
   --font-inter: var(--font-inter);
+}
+
+/* ============================================
+   STAR BORDER ANIMATIONS
+   ============================================ */
+@keyframes star-movement-bottom {
+  0% { transform: translate(0%, 0%); opacity: 1; }
+  100% { transform: translate(-100%, 0%); opacity: 0; }
+}
+
+@keyframes star-movement-top {
+  0% { transform: translate(0%, 0%); opacity: 1; }
+  100% { transform: translate(100%, 0%); opacity: 0; }
+}
+
+.animate-star-movement-bottom {
+  animation: star-movement-bottom 6s linear infinite alternate;
+}
+
+.animate-star-movement-top {
+  animation: star-movement-top 6s linear infinite alternate;
 }
 
 /* ============================================

@@ -1,15 +1,16 @@
 import { SectionHeader, GoldText } from "./ui";
 import { MISSION_ITEMS } from "@/lib/codehive/data";
+import { DynamicIcon } from "../DynamicIcon";
 
 // ─── Shared card style for Vision and Mission ─────────────────
 const CARD_CLASS =
   "relative group p-8 md:p-10 rounded-3xl border border-[#C9A227]/20 bg-gradient-to-br from-[#111111] to-[#141414] hover:border-[#C9A227]/40 transition-all duration-500 hover:shadow-[0_0_50px_rgba(201,162,39,0.12)]";
 
 // ─── Shared icon box ──────────────────────────────────────────
-function IconBox({ emoji }: { emoji: string }) {
+function IconBox({ icon }: { icon: string }) {
   return (
-    <div className="w-12 h-12 rounded-2xl bg-[#C9A227]/15 border border-[#C9A227]/30 flex items-center justify-center text-2xl">
-      {emoji}
+    <div className="w-12 h-12 rounded-2xl bg-[#C9A227]/15 border border-[#C9A227]/30 flex items-center justify-center text-[#C9A227]">
+      <DynamicIcon name={icon} size={24} strokeWidth={1.5} />
     </div>
   );
 }
@@ -38,7 +39,7 @@ export function VisionMissionSection() {
             <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-[#C9A227]/60 to-transparent" />
 
             <div className="flex items-center gap-3 mb-6">
-              <IconBox emoji="🎯" />
+              <IconBox icon="Target" />
               <h3 className="font-sora text-2xl font-bold text-white">Vision</h3>
             </div>
             <p className="text-gray-300 text-lg leading-relaxed">
@@ -62,14 +63,14 @@ export function VisionMissionSection() {
             <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-[#C9A227]/60 to-transparent" />
 
             <div className="flex items-center gap-3 mb-6">
-              <IconBox emoji="⚡" />
+              <IconBox icon="Zap" />
               <h3 className="font-sora text-2xl font-bold text-white">Mission</h3>
             </div>
             <ul className="space-y-4">
               {MISSION_ITEMS.map((item) => (
-                <li key={item.text} className="flex items-start gap-3">
-                  <span className="text-lg mt-0.5 flex-shrink-0" aria-hidden="true">
-                    {item.icon}
+                <li key={item.text} className="flex items-start gap-4">
+                  <span className="text-[#C9A227] mt-1 flex-shrink-0" aria-hidden="true">
+                    <DynamicIcon name={item.icon} size={18} strokeWidth={2} />
                   </span>
                   <span className="text-gray-300 text-sm leading-relaxed">{item.text}</span>
                 </li>
