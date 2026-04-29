@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unknown-property */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
@@ -140,7 +139,6 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
   const [dragged, drag] = useState<THREE.Vector3 | false>(false);
   const [hovered, hover] = useState(false);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   useRopeJoint(fixed as any, j1 as any, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j1 as any, j2 as any, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j2 as any, j3 as any, [[0, 0, 0], [0, 0, 0], 1]);

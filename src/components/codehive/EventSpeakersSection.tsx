@@ -52,8 +52,9 @@ export function EventSpeakersSection({ event }: { event: CodeHiveEvent }) {
                    
                    <div className="w-full h-full rounded-full overflow-hidden bg-gradient-to-br from-white/10 to-white/5 border-2 border-white/10 flex items-center justify-center relative z-10 group-hover:scale-105 transition-transform duration-500">
                       {speaker.image ? (
-                         <img src={speaker.image} alt={speaker.name} className="w-full h-full object-cover" />
-                      ) : (
+                       // eslint-disable-next-line @next/next/no-img-element
+                       <img src={speaker.image} alt={speaker.name} className="w-full h-full object-cover" />
+                    ) : (
                          <User className="w-12 h-12 text-gray-500 group-hover:text-[#1D6FE8] transition-colors" />
                       )}
                    </div>
