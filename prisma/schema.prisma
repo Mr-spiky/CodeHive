@@ -1,0 +1,317 @@
+// CodeHive — Production Schema
+// Every number/name/quote shown on the site traces back to a row here.
+// No component hardcodes a person's name, a testimonial, or a stat.
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────
+// IDENTITY & JOURNEY (member accounts + gamification)
+// ─────────────────────────────────────────────
+
+enum Role {
+  MEMBER
+  CORE_TEAM
+  ORGANIZER
+  ADMIN
+}
+
+enum JourneyStage {
+  VISITOR
+  MEMBER
+  ACTIVE_PARTICIPANT
+  CHALLENGE_COMPLETER
+  PROJECT_BUILDER
+  HACKATHON_PARTICIPANT
+  COMMUNITY_CONTRIBUTOR
+  CORE_TEAM_MEMBER
+  ORGANIZER_LEAD
+}
+
+model User {
+  id           String       @id @default(cuid())
+  email        String       @unique
+  username     String       @unique
+  password     String
+  name         String
+  avatarUrl    String?
+  avatarSkin   String       @default("default")
+  role         Role         @default(MEMBER)
+  journeyStage JourneyStage @default(VISITOR)
+  xp           Int          @default(0)
+  bio          String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  eventRegistrations  EventRegistration[]
+  challengeEnrollments ChallengeEnrollment[]
+  checkIns            ChallengeCheckIn[]
+  badges              UserBadge[]
+  xpTransactions      XPTransaction[]
+  quizAttempts        QuizAttempt[]
+
+  @@index([xp])
+  @@index([journeyStage])
+}
+
+model XPTransaction {
+  id        String   @id @default(cuid())
+  userId    String
+  amount    Int
+  reason    String
+  sourceId  String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// ─────────────────────────────────────────────
+// EVENTS
+// ─────────────────────────────────────────────
+
+enum EventStatus {
+  UPCOMING
+  LIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum EventCategory {
+  HACKATHON
+  WORKSHOP
+  MEETUP
+  WEBINAR
+  BOOTCAMP
+}
+
+model Event {
+  id          String        @id @default(cuid())
+  slug        String        @unique
+  title       String
+  description String
+  bannerUrl   String?
+  category    EventCategory
+  location    String?
+  isOnline    Boolean       @default(false)
+  startAt     DateTime
+  endAt       DateTime
+  status      EventStatus   @default(UPCOMING)
+  capacity    Int?
+  featured    Boolean       @default(false)
+  createdById String
+  createdAt   DateTime      @default(now())
+
+  registrations EventRegistration[]
+
+  @@index([status, startAt])
+}
+
+model EventRegistration {
+  id           String   @id @default(cuid())
+  userId       String
+  eventId      String
+  attended     Boolean  @default(false)
+  registeredAt DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, eventId])
+}
+
+// ─────────────────────────────────────────────
+// CHALLENGES (streaks, real check-ins)
+// ─────────────────────────────────────────────
+
+model Challenge {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  title        String
+  description  String
+  durationDays Int
+  startAt      DateTime
+  endAt        DateTime
+  xpPerCheckIn Int      @default(10)
+  createdAt    DateTime @default(now())
+
+  enrollments ChallengeEnrollment[]
+  checkIns    ChallengeCheckIn[]
+}
+
+model ChallengeEnrollment {
+  id            String   @id @default(cuid())
+  userId        String
+  challengeId   String
+  joinedAt      DateTime @default(now())
+  currentStreak Int      @default(0)
+  longestStreak Int      @default(0)
+  completed     Boolean  @default(false)
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, challengeId])
+}
+
+model ChallengeCheckIn {
+  id          String   @id @default(cuid())
+  userId      String
+  challengeId String
+  day         Int
+  proofUrl    String?
+  checkedInAt DateTime @default(now())
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, challengeId, day])
+}
+
+// ─────────────────────────────────────────────
+// RECOGNITION
+// ─────────────────────────────────────────────
+
+model Badge {
+  id          String @id @default(cuid())
+  slug        String @unique
+  name        String
+  description String
+  iconKey     String
+  criteria    String
+
+  awardedTo UserBadge[]
+}
+
+model UserBadge {
+  id        String   @id @default(cuid())
+  userId    String
+  badgeId   String
+  awardedAt DateTime @default(now())
+  awardedBy String?
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  badge Badge @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, badgeId])
+}
+
+// ─────────────────────────────────────────────
+// QUIZ ARENA
+// ─────────────────────────────────────────────
+
+model QuizQuestion {
+  id           String   @id @default(cuid())
+  topic        String
+  question     String
+  options      String
+  correctIndex Int
+  difficulty   Int      @default(1)
+  createdAt    DateTime @default(now())
+
+  attemptAnswers QuizAnswer[]
+}
+
+model QuizAttempt {
+  id         String    @id @default(cuid())
+  userId     String
+  score      Int       @default(0)
+  totalTime  Int
+  startedAt  DateTime  @default(now())
+  finishedAt DateTime?
+
+  user    User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  answers QuizAnswer[]
+
+  @@index([score])
+}
+
+model QuizAnswer {
+  id            String  @id @default(cuid())
+  attemptId     String
+  questionId    String
+  selectedIndex Int
+  isCorrect     Boolean
+  answerTimeMs  Int
+
+  attempt  QuizAttempt  @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  question QuizQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+}
+
+// ─────────────────────────────────────────────
+// PUBLIC CONTENT — Team / Blog / Testimonials
+// Real content lives here so no component ever hardcodes a person's
+// name, quote, or article body. Admin panel manages these tables.
+// ─────────────────────────────────────────────
+
+enum TeamCategory {
+  CORE
+  ADVISOR
+  ORGANIZING_DEPT
+}
+
+model TeamMember {
+  id          String       @id @default(cuid())
+  name        String
+  role        String
+  category    TeamCategory
+  photoUrl    String?
+  linkedin    String?
+  twitter     String?
+  github      String?
+  department  String?      // for ORGANIZING_DEPT cards, e.g. "Technical Team"
+  memberCount Int?         // for ORGANIZING_DEPT cards
+  sortOrder   Int          @default(0)
+  createdAt   DateTime     @default(now())
+}
+
+model Testimonial {
+  id         String   @id @default(cuid())
+  authorName String
+  authorRole String
+  quote      String
+  rating     Int      @default(5)
+  avatarUrl  String?
+  published  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+model SuccessStory {
+  id        String   @id @default(cuid())
+  title     String
+  summary   String
+  iconKey   String
+  linkUrl   String?
+  createdAt DateTime @default(now())
+}
+
+model BlogPost {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  title         String
+  excerpt       String
+  content       String
+  coverUrl      String?
+  category      String
+  tags          String   // JSON-encoded string[]
+  authorName    String
+  readMinutes   Int      @default(5)
+  published     Boolean  @default(false)
+  publishedAt   DateTime @default(now())
+}
+
+model Partner {
+  id        String  @id @default(cuid())
+  name      String
+  logoUrl   String
+  website   String?
+  sortOrder Int     @default(0)
+}

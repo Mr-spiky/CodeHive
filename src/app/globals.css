@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+/* ============================================
+   CODEHIVE DESIGN TOKENS — GOLD & BLACK ONLY
+   Every accent, badge, gradient, status color must be a shade of this
+   gold scale. No other hue anywhere, except real third-party brand
+   marks (e.g. LinkedIn/Twitter icon hovers), which keep their real color.
+   ============================================ */
+:root {
+  --ch-gold-50:  #FDF6E3;
+  --ch-gold-100: #F5E6B8;
+  --ch-gold-300: #E8C468;
+  --ch-gold-400: #E5C84A;
+  --ch-gold-500: #F4A227;
+  --ch-gold-600: #D4AF37;
+  --ch-gold-700: #C9A227;
+  --ch-gold-800: #B8860B;
+  --ch-gold-900: #A6741A;
+  --ch-gold-950: #6B5412;
+
+  --ch-bg: #05050F;
+  --ch-surface: #0D0D1F;
+  --ch-surface-2: #14142B;
+  --ch-border: rgba(201, 162, 39, 0.18);
+  --ch-text-muted: #9A9AB0;
+
+  --font-sora: 'Sora', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+}
+
+* {
+  border-color: var(--ch-border);
+}
+
+html, body {
+  background: var(--ch-bg);
+  color: #F2F2F5;
+  font-family: var(--font-inter);
+}
+
+.font-sora { font-family: var(--font-sora); }
+
+/* Reusable gradient text */
+.gold-text {
+  background: linear-gradient(90deg, var(--ch-gold-400), var(--ch-gold-700));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Animations shared across components */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float { animation: float 4s ease-in-out infinite; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
+
+/* ============================================
+   HIVE MAP — member dashboard honeycomb
+   ============================================ */
+.hive-world-shell {
+  min-height: 100vh;
+  background: radial-gradient(circle at 50% 0%, rgba(201, 162, 39, 0.08), transparent 60%), #05050F;
+}
+.hive-map { max-width: 1100px; margin: 0 auto; padding: 48px 24px 96px; }
+.hive-map__header { display: flex; flex-direction: column; gap: 16px; margin-bottom: 56px; }
+.hive-map__title {
+  font-family: var(--font-sora); font-size: 28px; font-weight: 700;
+  background: linear-gradient(90deg, var(--ch-gold-100), var(--ch-gold-600));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.xp-bar { display: flex; flex-direction: column; gap: 6px; max-width: 420px; }
+.xp-bar__labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--ch-gold-300); }
+.xp-bar__track { height: 14px; border-radius: 999px; background: #14142B; border: 1px solid var(--ch-border); overflow: hidden; }
+.xp-bar__fill {
+  height: 100%; border-radius: 999px;
+  background: linear-gradient(90deg, var(--ch-gold-900), var(--ch-gold-500), var(--ch-gold-100));
+  box-shadow: 0 0 12px rgba(244, 162, 39, 0.6);
+}
+.xp-bar__value { align-self: flex-end; font-size: 12px; color: var(--ch-gold-500); font-weight: 600; }
+.hive-map__grid { display: flex; flex-direction: column; align-items: center; }
+.hex-row { display: flex; gap: 18px; margin-top: -28px; }
+.hex-row:first-child { margin-top: 0; }
+.hex-tile {
+  width: 160px; height: 140px; border: none; background: transparent; cursor: pointer; position: relative;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); transition: filter 0.2s ease;
+}
+.hex-tile--unlocked { background: linear-gradient(145deg, var(--ch-gold-950), var(--ch-surface-2) 55%); box-shadow: inset 0 0 0 2px var(--ch-gold-700); }
+.hex-tile--unlocked:hover { box-shadow: inset 0 0 0 2px var(--ch-gold-400), 0 0 24px rgba(244, 162, 39, 0.35); }
+.hex-tile--locked { background: linear-gradient(145deg, #0D0D1F, #08081A); box-shadow: inset 0 0 0 1px rgba(201, 162, 39, 0.15); cursor: not-allowed; filter: grayscale(0.4) brightness(0.6); }
+.hex-tile__inner { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+.hex-tile__icon { font-size: 28px; }
+.hex-tile__label { font-family: var(--font-sora); font-size: 13px; font-weight: 600; color: var(--ch-gold-100); }
+.hex-tile--locked .hex-tile__label { color: rgba(245, 230, 184, 0.4); }
+
+/* ============================================
+   HIVE GATE — entry animation before dashboard reveal
+   ============================================ */
+.hive-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: radial-gradient(circle at 50% 45%, rgba(201, 162, 39, 0.15), #05050F 70%);
+}
+.hive-gate__text {
+  font-family: var(--font-sora);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ch-gold-100);
+  letter-spacing: 0.02em;
+}
+.hive-gate__subtext {
+  font-size: 13px;
+  color: var(--ch-gold-500);
+}
