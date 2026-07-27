@@ -14,49 +14,150 @@ const ORBIT_NODES = [
 ];
 
 function HiveConstellation() {
-  const radius = 150;
-  const center = 200;
+  const radius = 170; // Slightly larger for realistic spacing
+  const center = 230; // 460x460 container
+  const [hoveredNode, setHoveredNode] = useState<number | null>(null);
+
   return (
-    <div className="relative w-full max-w-[400px] aspect-square mx-auto">
-      <svg viewBox="0 0 400 400" className="absolute inset-0 w-full h-full pointer-events-none">
+    <div className="relative w-full max-w-[460px] aspect-square mx-auto select-none">
+      {/* SVG Connecting Laser Lines & Data Packets */}
+      <svg viewBox="0 0 460 460" className="absolute inset-0 w-full h-full overflow-visible pointer-events-none">
+        <defs>
+          <linearGradient id="laserGrad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="460" y2="460">
+            <stop offset="0%" stopColor="#FFD700" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#F4A227" stopOpacity="0.15" />
+          </linearGradient>
+          <filter id="glow" filterUnits="userSpaceOnUse" x="-50" y="-50" width="560" height="560">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
+
         {ORBIT_NODES.map((node, i) => {
           const rad = (node.angle * Math.PI) / 180;
           const x = center + radius * Math.cos(rad);
           const y = center + radius * Math.sin(rad);
+          const isHovered = hoveredNode === i;
+
           return (
-            <line key={i} x1={center} y1={center} x2={x} y2={y}
-              stroke="url(#hiveLineGradient)" strokeWidth="1.5" strokeDasharray="4 4" opacity="0.5" />
+            <g key={i}>
+              {/* Base Line */}
+              <line
+                x1={center}
+                y1={center}
+                x2={x}
+                y2={y}
+                stroke={isHovered ? "#FFD700" : "#C9A227"}
+                strokeWidth={isHovered ? "2.5" : "1.8"}
+                strokeDasharray={isHovered ? "none" : "6 4"}
+                strokeOpacity={isHovered ? "1" : "0.55"}
+                filter="url(#glow)"
+                className="transition-all duration-300"
+              />
+
+              {/* Animated Data Packet Pulse traveling from Center to Node */}
+              <circle r="3" fill="#FFD700" filter="url(#glow)">
+                <animateMotion
+                  path={`M ${center} ${center} L ${x} ${y}`}
+                  dur={`${2 + (i % 3) * 0.5}s`}
+                  repeatCount="indefinite"
+                  begin={`${i * 0.3}s`}
+                />
+              </circle>
+            </g>
           );
         })}
-        <defs>
-          <linearGradient id="hiveLineGradient" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#C9A227" />
-            <stop offset="100%" stopColor="#F4A227" stopOpacity="0.2" />
-          </linearGradient>
-        </defs>
       </svg>
 
-      <div className="absolute flex items-center justify-center" style={{ left: center - 55, top: center - 55, width: 110, height: 110 }}>
+      {/* 3D CORE HIVE REACTOR (NO TEXT) */}
+      <div
+        className="absolute flex items-center justify-center pointer-events-none"
+        style={{ left: center - 70, top: center - 70, width: 140, height: 140 }}
+      >
+        {/* Deep Plasma Background Glow */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--ch-gold-500)]/30 to-[var(--ch-gold-700)]/10 rounded-full blur-[40px] animate-pulse" />
+
+        {/* Outer Hexagonal Wireframe Ring 1 */}
         <div
-          className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#C9A227] to-[#8B6914] shadow-[0_0_60px_rgba(244,162,39,0.4)]"
-          style={{ clipPath: "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)" }}
+          className="absolute w-28 h-28 border border-[var(--ch-gold-400)]/50 shadow-[0_0_20px_rgba(255,215,0,0.25)] animate-[spin_16s_linear_infinite]"
+          style={{
+            clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+          }}
+        />
+
+        {/* Outer Hexagonal Wireframe Ring 2 */}
+        <div
+          className="absolute w-20 h-20 border border-dashed border-[var(--ch-gold-300)]/70 animate-[spin_10s_linear_infinite_reverse]"
+          style={{
+            clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+          }}
+        />
+
+        {/* The Solid Realistic 3D Core Gemstone (NO TEXT) */}
+        <div
+          className="relative w-16 h-16 shadow-[0_0_50px_rgba(255,215,0,0.9),inset_0_0_15px_rgba(255,255,255,0.8)] animate-float"
+          style={{
+            clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+            background: "linear-gradient(135deg, #FFF8DC 0%, #FFD700 35%, #B8860B 75%, #3A2500 100%)",
+          }}
         >
-          <span className="font-sora font-bold text-black text-sm text-center leading-tight">CodeHive</span>
+          {/* Inner Facet Reflection */}
+          <div
+            className="absolute inset-1 bg-gradient-to-tr from-transparent via-white/40 to-transparent"
+            style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
+          />
         </div>
       </div>
 
+      {/* Orbiting Realistic Nodes */}
       {ORBIT_NODES.map((node, i) => {
         const rad = (node.angle * Math.PI) / 180;
         const x = center + radius * Math.cos(rad);
         const y = center + radius * Math.sin(rad);
         const Icon = node.icon;
+        const isHovered = hoveredNode === i;
+
         return (
-          <div key={node.label} className="absolute flex flex-col items-center gap-1.5 animate-float"
-            style={{ left: x - 42, top: y - 28, width: 84, animationDelay: `${i * 0.4}s` }}>
-            <div className="w-12 h-12 rounded-2xl bg-[#111122]/90 border border-[#C9A227]/30 flex items-center justify-center backdrop-blur-md">
-              <Icon className="w-5 h-5 text-[#F4A227]" strokeWidth={1.75} />
+          <div
+            key={node.label}
+            onMouseEnter={() => setHoveredNode(i)}
+            onMouseLeave={() => setHoveredNode(null)}
+            className="absolute flex flex-col items-center gap-2 cursor-pointer group transition-all duration-300"
+            style={{
+              left: x - 45,
+              top: y - 35,
+              width: 90,
+              zIndex: isHovered ? 30 : 10,
+              transform: isHovered ? "scale(1.15) translateY(-4px)" : "scale(1)",
+            }}
+          >
+            {/* Glassmorphic Cyber Tile */}
+            <div
+              className={`w-14 h-14 rounded-2xl flex items-center justify-center backdrop-blur-xl transition-all duration-300 relative overflow-hidden ${
+                isHovered
+                  ? "bg-[#16162C]/95 border-2 border-[var(--ch-gold-400)] shadow-[0_0_25px_rgba(255,215,0,0.6)]"
+                  : "bg-[#090916]/85 border border-[var(--ch-gold-500)]/30 shadow-[0_4px_15px_rgba(0,0,0,0.8)] hover:border-[var(--ch-gold-500)]/60"
+              }`}
+            >
+              {/* Subtle top light reflection */}
+              <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-[var(--ch-gold-400)]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              
+              <Icon
+                className={`w-6 h-6 transition-transform duration-300 ${
+                  isHovered ? "text-[var(--ch-gold-300)] scale-110" : "text-[var(--ch-gold-500)]"
+                }`}
+                strokeWidth={1.8}
+              />
             </div>
-            <span className="text-[10px] font-medium text-gray-300 text-center whitespace-nowrap">{node.label}</span>
+
+            {/* Label with glow on hover */}
+            <span
+              className={`text-[11px] font-sora font-semibold tracking-wide text-center whitespace-nowrap transition-colors duration-300 ${
+                isHovered ? "text-white drop-shadow-[0_0_8px_rgba(255,215,0,0.8)]" : "text-gray-400"
+              }`}
+            >
+              {node.label}
+            </span>
           </div>
         );
       })}
