@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Flame } from "lucide-react";
 
 interface LeaderboardRow {
   rank: number;
@@ -16,7 +17,7 @@ interface SkillChallengeWidgetProps {
 }
 
 // Real challenge + leaderboard data, computed server-side from
-// ChallengeCheckIn rows (see prisma schema) — never mocked here.
+// ChallengeCheckIn rows - never mocked here.
 // `currentDay` = days elapsed since challenge start, out of durationDays.
 export function SkillChallengeWidget({ challengeTitle, currentDay, durationDays, topPerformers }: SkillChallengeWidgetProps) {
   const percent = Math.min(100, (currentDay / durationDays) * 100);
@@ -27,8 +28,8 @@ export function SkillChallengeWidget({ challengeTitle, currentDay, durationDays,
     <div className="rounded-2xl bg-[#0D0D1F]/60 border border-[var(--ch-border)] p-6 h-full">
       <div className="flex items-center justify-between mb-6">
         <h3 className="font-sora text-lg font-bold text-white">{challengeTitle}</h3>
-        <Link href="/hive/leaderboard" className="text-xs font-semibold text-[var(--ch-gold-500)] hover:underline">
-          View leaderboard →
+        <Link href="/hive/challenges" className="text-xs font-semibold text-[var(--ch-gold-500)] hover:underline">
+          View leaderboard &rarr;
         </Link>
       </div>
 
@@ -59,7 +60,7 @@ export function SkillChallengeWidget({ challengeTitle, currentDay, durationDays,
       <h4 className="text-xs font-bold tracking-widest uppercase text-gray-500 mb-3">Top Performers This Week</h4>
       <div className="space-y-2">
         {topPerformers.length === 0 && (
-          <p className="text-sm text-gray-600">No check-ins yet — be the first to join the challenge.</p>
+          <p className="text-sm text-gray-600">No check-ins yet - be the first to join the challenge.</p>
         )}
         {topPerformers.map((row) => (
           <div key={row.rank} className="flex items-center justify-between text-sm py-1.5">
@@ -70,7 +71,10 @@ export function SkillChallengeWidget({ challengeTitle, currentDay, durationDays,
             </div>
             <div className="flex items-center gap-4 text-gray-400 text-xs">
               <span>{row.posts} Posts</span>
-              <span className="text-[var(--ch-gold-500)] font-semibold">{row.streak} 🔥</span>
+              <span className="flex items-center gap-1 text-[var(--ch-gold-500)] font-semibold">
+                {row.streak}
+                <Flame size={12} className="text-[var(--ch-gold-500)]" />
+              </span>
             </div>
           </div>
         ))}

@@ -73,7 +73,7 @@ export default async function EventsPage() {
                 {pastEvents.map((e: EventRow) => (
                   <div key={e.id} className="text-sm">
                     <div className="text-gray-300">{e.title}</div>
-                    <div className="text-gray-600 text-xs">{e.startAt.toLocaleDateString()} · {e.isOnline ? "Online" : e.location}</div>
+                    <div className="text-gray-600 text-xs">{e.startAt.toLocaleDateString()} &bull; {e.isOnline ? "Online" : e.location}</div>
                   </div>
                 ))}
               </div>
@@ -87,7 +87,7 @@ export default async function EventsPage() {
         title="Don't miss out on amazing opportunities!"
         subtitle="Join our community and stay updated with the latest events."
         buttonLabel="Join Community"
-        href="/testimonials"
+        href="/join"
       />
     </main>
   );

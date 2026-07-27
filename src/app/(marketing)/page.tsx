@@ -67,7 +67,7 @@ export default async function HomePage() {
           />
         ) : (
           <div className="rounded-2xl bg-[#0D0D1F]/60 border border-[var(--ch-border)] p-6 flex items-center justify-center text-gray-500 text-sm">
-            No featured event right now — check back soon.
+            No featured event right now - check back soon.
           </div>
         )}
 
@@ -93,7 +93,7 @@ export default async function HomePage() {
         title="Ready to Build Something Amazing?"
         subtitle="Join thousands of developers and innovators already growing with CodeHive."
         buttonLabel="Join Community"
-        href="/testimonials"
+        href="/join"
       />
     </main>
   );

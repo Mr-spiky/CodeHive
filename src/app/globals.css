@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ============================================
-   CODEHIVE DESIGN TOKENS — GOLD & BLACK ONLY
+   CODEHIVE DESIGN TOKENS - GOLD & BLACK ONLY
    Every accent, badge, gradient, status color must be a shade of this
    gold scale. No other hue anywhere, except real third-party brand
    marks (e.g. LinkedIn/Twitter icon hovers), which keep their real color.
@@ -36,6 +36,12 @@ html, body {
   background: var(--ch-bg);
   color: #F2F2F5;
   font-family: var(--font-inter);
+  
+  /* Gamified ambient overlay: Dark subtle honeycomb grid */
+  background-image: 
+    linear-gradient(rgba(5, 5, 15, 0.95), rgba(5, 5, 15, 0.95)),
+    url("data:image/svg+xml,%3Csvg width='40' height='69.2820323027551' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 17.32050807568877l-20 11.547005383792516L0 17.32050807568877 0 0l20-11.547005383792515L40 0zM0 51.96152422706631l20-11.547005383792514 20 11.547005383792514 0 17.32050807568877-20 11.547005383792513L0 69.2820323027551z' fill='none' stroke='rgba(255,215,0,0.03)' stroke-width='1'/%3E%3C/svg%3E");
+  background-attachment: fixed;
 }
 
 .font-sora { font-family: var(--font-sora); }
@@ -62,7 +68,7 @@ html, body {
 .animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
 
 /* ============================================
-   HIVE MAP — member dashboard honeycomb
+   HIVE MAP - member dashboard honeycomb
    ============================================ */
 .hive-world-shell {
   min-height: 100vh;
@@ -77,6 +83,8 @@ html, body {
 }
 .xp-bar { display: flex; flex-direction: column; gap: 6px; max-width: 420px; }
 .xp-bar__labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--ch-gold-300); }
+.xp-bar__current { font-weight: 600; color: var(--ch-gold-100); }
+.xp-bar__next { color: var(--ch-gold-500); opacity: 0.85; }
 .xp-bar__track { height: 14px; border-radius: 999px; background: #14142B; border: 1px solid var(--ch-border); overflow: hidden; }
 .xp-bar__fill {
   height: 100%; border-radius: 999px;
@@ -100,7 +108,7 @@ html, body {
 .hex-tile--locked .hex-tile__label { color: rgba(245, 230, 184, 0.4); }
 
 /* ============================================
-   HIVE GATE — entry animation before dashboard reveal
+   HIVE GATE - entry animation before dashboard reveal
    ============================================ */
 .hive-gate {
   position: fixed;
@@ -123,4 +131,17 @@ html, body {
 .hive-gate__subtext {
   font-size: 13px;
   color: var(--ch-gold-500);
+}
+
+/* ============================================
+   GAMIFIED CRT SCANLINES & RADAR EFFECTS
+/* Radar pulse for interactive CTAs */
+@keyframes radar-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+}
+
+a[href*="/join"], a[href*="/signup"], button {
+  animation: radar-pulse 3s infinite;
 }

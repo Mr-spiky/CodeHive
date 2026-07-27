@@ -52,7 +52,7 @@ export default async function TestimonialsPage() {
         title="Ready to start your journey with CodeHive?"
         subtitle="Connect. Collaborate. Create Impact."
         buttonLabel="Join Community Now"
-        href="#"
+        href="/join"
       />
     </main>
   );

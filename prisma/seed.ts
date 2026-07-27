@@ -1,5 +1,5 @@
 // Real seed data only. Team members, testimonials, blog posts, and
-// partner logos are intentionally left empty here — add them via the
+// partner logos are intentionally left empty here - add them via the
 // Admin Panel with real content. This script never invents fake names.
 import { PrismaClient } from "../src/generated/prisma";
 
@@ -14,7 +14,7 @@ async function main() {
       slug: "the-big-shift-1-0",
       title: "The Big Shift 1.0",
       description:
-        "A high-impact offline tech event for students, developers, professionals, and founders — AI, Web3, Data Science, and networking with industry experts.",
+        "A high-impact offline tech event for students, developers, professionals, and founders - AI, Web3, Data Science, and networking with industry experts.",
       category: "MEETUP",
       location: "GeeksforGeeks, Noida",
       isOnline: false,

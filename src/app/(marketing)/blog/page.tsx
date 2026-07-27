@@ -16,7 +16,7 @@ interface BlogPostRow {
 export default async function BlogPage() {
   const posts: BlogPostRow[] = await prisma.blogPost.findMany({ where: { published: true }, orderBy: { publishedAt: "desc" } });
 
-  // Real, computed from actual posts — never a hardcoded category list.
+  // Real, computed from actual posts - never a hardcoded category list.
   const categoryCounts = posts.reduce<Record<string, number>>((acc, p: BlogPostRow) => {
     acc[p.category] = (acc[p.category] ?? 0) + 1;
     return acc;
@@ -36,7 +36,7 @@ export default async function BlogPage() {
         <div className="lg:col-span-2">
           <h2 className="font-sora text-xl font-bold text-white mb-6">Latest Articles</h2>
           {posts.length === 0 ? (
-            <p className="text-gray-500 text-sm">No published articles yet — add real posts via the Admin Panel.</p>
+            <p className="text-gray-500 text-sm">No published articles yet - add real posts via the Admin Panel.</p>
           ) : (
             <div className="space-y-4">
               {posts.map((post: BlogPostRow) => (

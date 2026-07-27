@@ -41,7 +41,7 @@ export default async function TeamPage() {
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
         <SectionHeader badge="Leadership" title="Core Team" />
         {core.length === 0 ? (
-          <p className="text-gray-500 text-sm">No core team members added yet — add real profiles via the Admin Panel.</p>
+          <p className="text-gray-500 text-sm">No core team members added yet - add real profiles via the Admin Panel.</p>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {core.map((m: TeamMemberRow) => (
@@ -79,8 +79,8 @@ export default async function TeamPage() {
         icon={<Users className="w-5 h-5 text-[var(--ch-gold-500)]" />}
         title="Want to join our amazing team?"
         subtitle="We're always looking for passionate individuals to build the future with us."
-        buttonLabel="Join Our Team"
-        href="/testimonials"
+        buttonLabel="Join Community"
+        href="/join"
       />
     </main>
   );

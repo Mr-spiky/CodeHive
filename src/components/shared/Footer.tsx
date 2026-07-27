@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { Github, Twitter, Instagram, Youtube, Linkedin } from "lucide-react";
+import Image from "next/image";
+import { Instagram, Linkedin, Mail } from "lucide-react";
+import { SOCIAL_LINKS } from "@/lib/data/constants";
 
 const QUICK_LINKS = [
   { href: "/", label: "Home" },
@@ -9,7 +11,6 @@ const QUICK_LINKS = [
   { href: "/testimonials", label: "Testimonials" },
 ];
 
-// REPLACE: confirm these routes exist / point to real content before launch
 const COMMUNITY_LINKS = [
   { href: "/about", label: "About Us" },
   { href: "/code-of-conduct", label: "Code of Conduct" },
@@ -24,13 +25,11 @@ const SUPPORT_LINKS = [
   { href: "/terms", label: "Terms of Use" },
 ];
 
-// REPLACE: with real CodeHive social handles
+// Real handles - only verified platforms included
 const SOCIALS = [
-  { icon: Linkedin, href: "#" },
-  { icon: Github, href: "#" },
-  { icon: Twitter, href: "#" },
-  { icon: Instagram, href: "#" },
-  { icon: Youtube, href: "#" },
+  { icon: Linkedin, href: SOCIAL_LINKS.linkedin, label: "LinkedIn" },
+  { icon: Instagram, href: SOCIAL_LINKS.instagram, label: "Instagram" },
+  { icon: Mail, href: SOCIAL_LINKS.email, label: "Email" },
 ];
 
 export function Footer() {
@@ -39,13 +38,10 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid md:grid-cols-5 gap-10 pb-12">
           <div className="md:col-span-1">
-            <div className="flex items-center gap-2 font-sora font-bold text-lg mb-4">
-              <span
-                className="w-8 h-8 bg-gradient-to-br from-[var(--ch-gold-500)] to-[var(--ch-gold-900)]"
-                style={{ clipPath: "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)" }}
-              />
+            <Link href="/" className="flex items-center gap-2 font-sora font-bold text-lg mb-4 hover:opacity-80 transition-opacity w-fit">
+              <Image src="/image/logo.png" alt="CodeHive Logo" width={32} height={32} className="object-contain" />
               CodeHive
-            </div>
+            </Link>
             <p className="text-sm text-gray-500 leading-relaxed">
               A student-driven developer community to learn, build and grow together.
             </p>
@@ -75,12 +71,13 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-4 pt-8 border-t border-[var(--ch-border)]">
-          <p className="text-xs text-gray-600">© {new Date().getFullYear()} CodeHive. All rights reserved.</p>
+          <p className="text-xs text-gray-600">&copy; {new Date().getFullYear()} CodeHive. All rights reserved.</p>
           <div className="flex gap-3">
-            {SOCIALS.map((s, i) => (
+            {SOCIALS.map((s) => (
               <a
-                key={i}
+                key={s.label}
                 href={s.href}
+                aria-label={s.label}
                 className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[var(--ch-gold-500)] hover:border-[var(--ch-gold-500)]/50 transition-all"
               >
                 <s.icon size={16} />

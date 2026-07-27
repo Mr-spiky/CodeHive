@@ -1,4 +1,5 @@
 import { Trophy, Briefcase, Rocket, Users } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 const ICONS: Record<string, typeof Trophy> = { trophy: Trophy, briefcase: Briefcase, rocket: Rocket, users: Users };
@@ -12,7 +13,11 @@ export function SuccessStoryCard({ title, summary, iconKey, linkUrl }: { title: 
       </div>
       <h4 className="font-sora font-semibold text-white text-sm mb-1.5">{title}</h4>
       <p className="text-gray-500 text-xs mb-3 leading-relaxed">{summary}</p>
-      {linkUrl && <Link href={linkUrl} className="text-xs font-semibold text-[var(--ch-gold-500)]">Read Story →</Link>}
+      {linkUrl && (
+        <Link href={linkUrl} className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--ch-gold-500)]">
+          Read Story <ArrowRight size={12} />
+        </Link>
+      )}
     </div>
   );
 }

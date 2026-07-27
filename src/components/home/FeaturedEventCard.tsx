@@ -9,7 +9,7 @@ interface FeaturedEventCardProps {
   slug: string;
 }
 
-// Real event data only — passed in from a Prisma query in page.tsx,
+// Real event data only - passed in from a Prisma query in page.tsx,
 // this component never invents its own event content.
 export function FeaturedEventCard({ title, description, location, startAt, slug }: FeaturedEventCardProps) {
   return (

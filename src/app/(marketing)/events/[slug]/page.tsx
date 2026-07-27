@@ -1,11 +1,24 @@
 import { prisma } from "@/lib/prisma";
+import { getCurrentUser } from "@/lib/auth";
 import { notFound } from "next/navigation";
 import { Calendar, MapPin } from "lucide-react";
+import { EventRegisterButton } from "@/components/events/EventRegisterButton";
 
 export default async function EventDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const event = await prisma.event.findUnique({ where: { slug } });
+  const [event, user] = await Promise.all([
+    prisma.event.findUnique({ where: { slug } }),
+    getCurrentUser(),
+  ]);
   if (!event) notFound();
+
+  let isRegistered = false;
+  if (user) {
+    const reg = await prisma.eventRegistration.findUnique({
+      where: { userId_eventId: { userId: user.id, eventId: event.id } },
+    });
+    isRegistered = !!reg;
+  }
 
   return (
     <main className="min-h-screen bg-[#0A0A0A] pt-32 pb-16">
@@ -16,7 +29,9 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
           <span className="flex items-center gap-2"><Calendar size={14} className="text-[var(--ch-gold-500)]" />{event.startAt.toLocaleDateString()}</span>
           <span className="flex items-center gap-2"><MapPin size={14} className="text-[var(--ch-gold-500)]" />{event.isOnline ? "Online" : event.location}</span>
         </div>
-        <p className="text-gray-300 leading-relaxed">{event.description}</p>
+        <div className="text-gray-300 leading-relaxed whitespace-pre-wrap">{event.description}</div>
+        
+        <EventRegisterButton eventId={event.id} isLoggedIn={!!user} initialRegistered={isRegistered} />
       </div>
     </main>
   );

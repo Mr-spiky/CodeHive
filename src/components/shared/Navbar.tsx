@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 import { COMMUNITY_LINK } from "@/lib/data/constants";
 
 const NAV_LINKS = [
@@ -18,11 +19,8 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-[#05050F]/90 backdrop-blur-md border-b border-[var(--ch-border)]">
       <nav className="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 font-sora font-bold text-lg">
-          <span
-            className="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-[var(--ch-gold-500)] to-[var(--ch-gold-900)]"
-            style={{ clipPath: "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)" }}
-          />
+        <Link href="/" className="flex items-center gap-2 font-sora font-bold text-lg hover:opacity-80 transition-opacity">
+          <Image src="/image/logo.png" alt="CodeHive Logo" width={32} height={32} className="object-contain" />
           CodeHive
         </Link>
 
@@ -43,7 +41,7 @@ export function Navbar() {
             href={COMMUNITY_LINK}
             className="px-5 py-2.5 rounded-full text-sm font-bold text-black bg-gradient-to-r from-[var(--ch-gold-700)] to-[var(--ch-gold-500)] hover:scale-105 transition-transform"
           >
-            Join Community →
+            Join Community &rarr;
           </a>
         </div>
 

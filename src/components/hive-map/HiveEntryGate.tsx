@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-// Plays once per browser session (sessionStorage-gated) — a returning
+// Plays once per browser session (sessionStorage-gated) - a returning
 // member mid-session doesn't have to sit through it on every navigation
 // back to /hive, only on their first entry that session.
 export function HiveEntryGate({ username, children }: { username: string; children: React.ReactNode }) {

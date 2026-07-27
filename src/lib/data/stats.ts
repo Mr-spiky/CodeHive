@@ -3,7 +3,7 @@ export interface StatItem {
   label: string;
 }
 
-// Real CodeHive numbers. Update these here — every stat strip on the site
+// Real CodeHive numbers. Update these here - every stat strip on the site
 // reads from this single source, so a number is never hardcoded twice.
 export const COMMUNITY_STATS: StatItem[] = [
   { value: "2000+", label: "Active Members" },

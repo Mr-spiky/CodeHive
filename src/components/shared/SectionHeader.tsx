@@ -1,4 +1,6 @@
+"use client";
 import { ReactNode } from "react";
+import { DecodeText } from "@/components/shared/DecodeText";
 
 export function SectionHeader({
   badge,
@@ -14,13 +16,19 @@ export function SectionHeader({
   return (
     <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
       <div>
-        {badge && <span className="text-xs font-bold tracking-widest uppercase text-[var(--ch-gold-500)] mb-2 block">{badge}</span>}
-        <h2 className="font-sora text-2xl md:text-3xl font-bold text-white">{title}</h2>
+        {badge && (
+          <span className="text-xs font-bold tracking-widest uppercase text-[var(--ch-gold-500)] mb-2 block">
+            <DecodeText text={badge} speed={30} />
+          </span>
+        )}
+        <h2 className="font-sora text-2xl md:text-3xl font-bold text-white">
+          {typeof title === "string" ? <DecodeText text={title} speed={40} /> : title}
+        </h2>
         {subtitle && <p className="text-gray-400 mt-2 max-w-xl">{subtitle}</p>}
       </div>
       {action && (
         <a href={action.href} className="text-sm font-semibold text-[var(--ch-gold-500)] hover:text-[var(--ch-gold-300)] whitespace-nowrap">
-          {action.label} →
+          {action.label} &rarr;
         </a>
       )}
     </div>

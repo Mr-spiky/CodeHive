@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 
-// Real counts only — no placeholder stat cards.
+// Real counts only - no placeholder stat cards.
 export default async function AdminHome() {
   const [memberCount, liveEvents, activeChallenges] = await Promise.all([
     prisma.user.count(),
@@ -26,7 +26,7 @@ export default async function AdminHome() {
         </div>
       </div>
       <p className="text-gray-600 text-sm mt-8">
-        Full CRUD screens for events/challenges/team/blog/testimonials are the next build phase — this is a real, data-backed overview page, not the complete admin panel yet.
+        Full CRUD screens for events/challenges/team/blog/testimonials are the next build phase - this is a real, data-backed overview page, not the complete admin panel yet.
       </p>
     </div>
   );

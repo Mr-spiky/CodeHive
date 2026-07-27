@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Calendar, Clock } from "lucide-react";
+import { Calendar, Clock, FileText } from "lucide-react";
 
 interface ArticleCardProps {
   slug: string;
@@ -14,7 +14,7 @@ export function ArticleCard({ slug, title, excerpt, category, publishedAt, readM
   return (
     <Link href={`/blog/${slug}`} className="flex gap-5 p-5 rounded-2xl bg-[#0D0D1F]/60 border border-[var(--ch-border)] hover:border-[var(--ch-gold-500)]/40 transition-colors">
       <div className="w-28 h-28 rounded-xl bg-[var(--ch-gold-700)]/10 flex-shrink-0 flex items-center justify-center">
-        <span className="text-3xl">📝</span>
+        <FileText className="w-8 h-8 text-[var(--ch-gold-700)]" strokeWidth={1.5} />
       </div>
       <div>
         <span className="inline-block text-[10px] font-bold tracking-widest uppercase text-[var(--ch-gold-500)] bg-[var(--ch-gold-700)]/15 px-2.5 py-1 rounded-full mb-2">

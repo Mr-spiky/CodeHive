@@ -17,7 +17,7 @@ export interface EventListItem {
 
 const TABS = ["All Events", "Hackathon", "Workshop", "Meetup", "Webinar", "Bootcamp"];
 
-// Real client-side filtering over actually-fetched events — search/category
+// Real client-side filtering over actually-fetched events - search/category
 // filters here genuinely narrow the list, they're not decorative UI.
 export function EventsExplorer({ events }: { events: EventListItem[] }) {
   const [query, setQuery] = useState("");
@@ -84,7 +84,7 @@ export function EventsExplorer({ events }: { events: EventListItem[] }) {
               </span>
             </div>
             <Link href={`/events/${event.slug}`} className="text-sm font-semibold text-[var(--ch-gold-500)] hover:underline">
-              View Details →
+              View Details &rarr;
             </Link>
           </div>
         ))}
