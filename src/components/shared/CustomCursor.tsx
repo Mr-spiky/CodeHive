@@ -1,9 +1,18 @@
 "use client";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 export function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const mouseX = useMotionValue(-100);
+  const mouseY = useMotionValue(-100);
+  
+  const springX = useSpring(mouseX, { stiffness: 400, damping: 28, mass: 0.5 });
+  const springY = useSpring(mouseY, { stiffness: 400, damping: 28, mass: 0.5 });
+  
+  // Offset by -12 to center the 24x24 cursor
+  const cursorX = useTransform(springX, (v) => v - 12);
+  const cursorY = useTransform(springY, (v) => v - 12);
+
   const [isHovering, setIsHovering] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [isTouch, setIsTouch] = useState(true);
@@ -14,7 +23,8 @@ export function CustomCursor() {
     }
 
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -45,7 +55,7 @@ export function CustomCursor() {
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
     };
-  }, []);
+  }, [mouseX, mouseY]);
 
   if (isTouch) return null;
 
@@ -53,11 +63,11 @@ export function CustomCursor() {
     <motion.div
       className="fixed top-0 left-0 w-6 h-6 border-2 border-[var(--ch-gold-500)] pointer-events-none z-[10000] mix-blend-difference"
       style={{
+        x: cursorX,
+        y: cursorY,
         clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
       }}
       animate={{
-        x: mousePosition.x - 12,
-        y: mousePosition.y - 12,
         scale: isClicked ? 0.5 : isHovering ? 2 : 1,
         rotate: isClicked ? -45 : isHovering ? 90 : 0,
         backgroundColor: isHovering || isClicked ? "rgba(255, 215, 0, 0.9)" : "transparent",

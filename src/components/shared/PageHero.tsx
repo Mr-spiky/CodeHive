@@ -1,6 +1,6 @@
 "use client";
 import { ReactNode, useState, useEffect } from "react";
-import { motion, useSpring, useTransform } from "framer-motion";
+import { motion, useSpring, useTransform, useMotionValue } from "framer-motion";
 
 import { DecodeText } from "@/components/shared/DecodeText";
 
@@ -13,26 +13,28 @@ interface PageHeroProps {
 }
 
 export function PageHero({ eyebrow, title, subtitle, children, illustration }: PageHeroProps) {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
     setWindowSize({ width: window.innerWidth, height: window.innerHeight });
     
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
     };
     
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  }, [mouseX, mouseY]);
 
-  const mouseX = useSpring(mousePosition.x, { stiffness: 50, damping: 20 });
-  const mouseY = useSpring(mousePosition.y, { stiffness: 50, damping: 20 });
+  const springX = useSpring(mouseX, { stiffness: 50, damping: 20 });
+  const springY = useSpring(mouseY, { stiffness: 50, damping: 20 });
 
   // Calculate parallax offsets based on mouse position relative to center
-  const parallaxX = useTransform(mouseX, [0, windowSize.width || 1000], [-30, 30]);
-  const parallaxY = useTransform(mouseY, [0, windowSize.height || 800], [-30, 30]);
+  const parallaxX = useTransform(springX, [0, windowSize.width || 1000], [-30, 30]);
+  const parallaxY = useTransform(springY, [0, windowSize.height || 800], [-30, 30]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -65,15 +67,17 @@ export function PageHero({ eyebrow, title, subtitle, children, illustration }: P
         />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-12 items-center">
-        <motion.div variants={containerVariants} initial="hidden" animate="visible">
+      <div className={`relative max-w-7xl mx-auto px-6 lg:px-10 grid ${illustration ? "lg:grid-cols-2 text-center lg:text-left" : "grid-cols-1 text-center"} gap-12 items-center`}>
+        <motion.div variants={containerVariants} initial="hidden" animate="visible" className={!illustration ? "flex flex-col items-center" : ""}>
           <motion.span variants={itemVariants} className="text-xs font-bold tracking-widest uppercase text-[var(--ch-gold-500)] mb-4 block">
             <DecodeText text={eyebrow} speed={25} />
           </motion.span>
           <motion.h1 variants={itemVariants} className="font-sora text-4xl md:text-5xl font-extrabold text-white leading-tight mb-5">
             {typeof title === "string" ? <DecodeText text={title} speed={35} /> : title}
           </motion.h1>
-          <motion.p variants={itemVariants} className="text-gray-400 text-lg max-w-lg mb-8">{subtitle}</motion.p>
+          <motion.p variants={itemVariants} className={`text-gray-400 text-lg max-w-lg mb-8 ${!illustration ? "mx-auto" : "mx-auto lg:mx-0"}`}>
+            {subtitle}
+          </motion.p>
           {children && <motion.div variants={itemVariants}>{children}</motion.div>}
         </motion.div>
         
@@ -91,3 +95,4 @@ export function PageHero({ eyebrow, title, subtitle, children, illustration }: P
     </section>
   );
 }
+

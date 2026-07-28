@@ -125,11 +125,11 @@ export function VisitorBadge() {
         )}
       </AnimatePresence>
 
-      <div className="bg-[#05050F]/90 backdrop-blur-md border border-[var(--ch-gold-500)]/40 rounded-lg p-3 shadow-[0_4px_20px_rgba(0,0,0,0.8)] flex items-center gap-3 w-72">
+      <div className="bg-[#05050F]/90 backdrop-blur-md border border-[var(--ch-gold-500)]/40 rounded-lg p-3 shadow-[0_4px_20px_rgba(0,0,0,0.8)] flex items-center gap-3 w-[calc(100vw-3rem)] sm:w-72">
         <div 
           onClick={() => addXp(10, "Manual Boost")}
           title="Click for +10 XP Manual Boost"
-          className="w-10 h-10 bg-[var(--ch-gold-500)]/10 border border-[var(--ch-gold-500)]/30 rounded flex items-center justify-center cursor-pointer hover:bg-[var(--ch-gold-500)]/20 transition-colors group"
+          className="w-10 h-10 bg-[var(--ch-gold-500)]/10 border border-[var(--ch-gold-500)]/30 rounded flex items-center justify-center cursor-pointer hover:bg-[var(--ch-gold-500)]/20 transition-colors group flex-shrink-0"
         >
           <Zap className="w-5 h-5 text-[var(--ch-gold-500)] group-hover:scale-110 transition-transform" />
         </div>

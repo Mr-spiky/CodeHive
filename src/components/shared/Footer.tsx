@@ -36,8 +36,8 @@ export function Footer() {
   return (
     <footer className="bg-[#05050F] border-t border-[var(--ch-border)] pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="grid md:grid-cols-5 gap-10 pb-12">
-          <div className="md:col-span-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 pb-12">
+          <div className="lg:col-span-3 sm:col-span-2">
             <Link href="/" className="flex items-center gap-2 font-sora font-bold text-lg mb-4 hover:opacity-80 transition-opacity w-fit">
               <Image src="/image/logo.png" alt="CodeHive Logo" width={32} height={32} className="object-contain" />
               CodeHive
@@ -47,11 +47,17 @@ export function Footer() {
             </p>
           </div>
 
-          <FooterColumn title="Quick Links" links={QUICK_LINKS} />
-          <FooterColumn title="Community" links={COMMUNITY_LINKS} />
-          <FooterColumn title="Support" links={SUPPORT_LINKS} />
+          <div className="lg:col-span-2 sm:col-span-1">
+            <FooterColumn title="Quick Links" links={QUICK_LINKS} />
+          </div>
+          <div className="lg:col-span-2 sm:col-span-1">
+            <FooterColumn title="Community" links={COMMUNITY_LINKS} />
+          </div>
+          <div className="lg:col-span-2 sm:col-span-1">
+            <FooterColumn title="Support" links={SUPPORT_LINKS} />
+          </div>
 
-          <div>
+          <div className="lg:col-span-3 sm:col-span-2">
             <h4 className="font-sora font-semibold text-sm text-white mb-4">Subscribe to our newsletter</h4>
             <p className="text-sm text-gray-500 mb-3">Get the latest updates on events and announcements.</p>
             <form className="flex gap-2">
