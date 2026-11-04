@@ -1,15 +1,23 @@
+
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { verifySession } from "@/lib/auth";
+import { verifyRequestSession } from "@/lib/session-token";
 
 export async function middleware(request: NextRequest) {
-  const session = await verifySession(request);
+  const session = await verifyRequestSession(request);
+
   const protectedPaths = ["/hive", "/admin"];
-  const isProtected = protectedPaths.some((p) => request.nextUrl.pathname.startsWith(p));
+  const isProtected = protectedPaths.some(
+    (path) =>
+      request.nextUrl.pathname === path ||
+      request.nextUrl.pathname.startsWith(`${path}/`)
+  );
 
   if (isProtected && !session) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    const loginUrl = new URL("/login", request.url);
+    return NextResponse.redirect(loginUrl);
   }
+
   return NextResponse.next();
 }
 

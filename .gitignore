@@ -38,3 +38,5 @@ yarn-error.log*
 .vscode/*
 !.vscode/extensions.json
 .idea
+# Local nested project copy
+/CodeHive/

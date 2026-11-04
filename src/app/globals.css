@@ -1,13 +1,11 @@
+
 @import "tailwindcss";
 
 /* ============================================
-   CODEHIVE DESIGN TOKENS - GOLD & BLACK ONLY
-   Every accent, badge, gradient, status color must be a shade of this
-   gold scale. No other hue anywhere, except real third-party brand
-   marks (e.g. LinkedIn/Twitter icon hovers), which keep their real color.
+   CODEHIVE DESIGN TOKENS — GOLD & BLACK ONLY
    ============================================ */
 :root {
-  --ch-gold-50:  #FDF6E3;
+  --ch-gold-50: #FDF6E3;
   --ch-gold-100: #F5E6B8;
   --ch-gold-300: #E8C468;
   --ch-gold-400: #E5C84A;
@@ -24,91 +22,255 @@
   --ch-border: rgba(201, 162, 39, 0.18);
   --ch-text-muted: #9A9AB0;
 
-  --font-sora: 'Sora', sans-serif;
-  --font-inter: 'Inter', sans-serif;
+  --font-sora: "Sora", sans-serif;
+  --font-inter: "Inter", sans-serif;
 }
 
-* {
-  border-color: var(--ch-border);
-}
+/*
+ * Do not set border-color globally.
+ * Components should use explicit Tailwind border classes,
+ * e.g. border-white/10, border-rose-400/20 or border-amber-300/20.
+ * This prevents unwanted gold borders on admin dialogs and buttons.
+ */
 
-html, body {
-  background: var(--ch-bg);
+html,
+body {
+  background-color: var(--ch-bg);
   color: #F2F2F5;
   font-family: var(--font-inter);
-  
-  /* Gamified ambient overlay: Dark subtle honeycomb grid */
-  background-image: 
+
+  /* Subtle ambient honeycomb background */
+  background-image:
     linear-gradient(rgba(5, 5, 15, 0.95), rgba(5, 5, 15, 0.95)),
     url("data:image/svg+xml,%3Csvg width='40' height='69.2820323027551' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 17.32050807568877l-20 11.547005383792516L0 17.32050807568877 0 0l20-11.547005383792515L40 0zM0 51.96152422706631l20-11.547005383792514 20 11.547005383792514 0 17.32050807568877-20 11.547005383792513L0 69.2820323027551z' fill='none' stroke='rgba(255,215,0,0.03)' stroke-width='1'/%3E%3C/svg%3E");
   background-attachment: fixed;
 }
 
-.font-sora { font-family: var(--font-sora); }
+.font-sora {
+  font-family: var(--font-sora);
+}
 
 /* Reusable gradient text */
 .gold-text {
-  background: linear-gradient(90deg, var(--ch-gold-400), var(--ch-gold-700));
+  background: linear-gradient(
+    90deg,
+    var(--ch-gold-400),
+    var(--ch-gold-700)
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* Animations shared across components */
+/* ============================================
+   SHARED ANIMATIONS
+   ============================================ */
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
-.animate-float { animation: float 4s ease-in-out infinite; }
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-.animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
 
 /* ============================================
-   HIVE MAP - member dashboard honeycomb
+   HIVE MAP — MEMBER DASHBOARD HONEYCOMB
    ============================================ */
 .hive-world-shell {
   min-height: 100vh;
-  background: radial-gradient(circle at 50% 0%, rgba(201, 162, 39, 0.08), transparent 60%), #05050F;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(201, 162, 39, 0.08),
+      transparent 60%
+    ),
+    #05050F;
 }
-.hive-map { max-width: 1100px; margin: 0 auto; padding: 48px 24px 96px; }
-.hive-map__header { display: flex; flex-direction: column; gap: 16px; margin-bottom: 56px; }
+
+.hive-map {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px 96px;
+}
+
+.hive-map__header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 56px;
+}
+
 .hive-map__title {
-  font-family: var(--font-sora); font-size: 28px; font-weight: 700;
-  background: linear-gradient(90deg, var(--ch-gold-100), var(--ch-gold-600));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
+  font-family: var(--font-sora);
+  font-size: 28px;
+  font-weight: 700;
+  background: linear-gradient(
+    90deg,
+    var(--ch-gold-100),
+    var(--ch-gold-600)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
-.xp-bar { display: flex; flex-direction: column; gap: 6px; max-width: 420px; }
-.xp-bar__labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--ch-gold-300); }
-.xp-bar__current { font-weight: 600; color: var(--ch-gold-100); }
-.xp-bar__next { color: var(--ch-gold-500); opacity: 0.85; }
-.xp-bar__track { height: 14px; border-radius: 999px; background: #14142B; border: 1px solid var(--ch-border); overflow: hidden; }
+
+.xp-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 420px;
+}
+
+.xp-bar__labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--ch-gold-300);
+}
+
+.xp-bar__current {
+  font-weight: 600;
+  color: var(--ch-gold-100);
+}
+
+.xp-bar__next {
+  color: var(--ch-gold-500);
+  opacity: 0.85;
+}
+
+.xp-bar__track {
+  height: 14px;
+  border-radius: 999px;
+  background: #14142B;
+  border: 1px solid var(--ch-border);
+  overflow: hidden;
+}
+
 .xp-bar__fill {
-  height: 100%; border-radius: 999px;
-  background: linear-gradient(90deg, var(--ch-gold-900), var(--ch-gold-500), var(--ch-gold-100));
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--ch-gold-900),
+    var(--ch-gold-500),
+    var(--ch-gold-100)
+  );
   box-shadow: 0 0 12px rgba(244, 162, 39, 0.6);
 }
-.xp-bar__value { align-self: flex-end; font-size: 12px; color: var(--ch-gold-500); font-weight: 600; }
-.hive-map__grid { display: flex; flex-direction: column; align-items: center; }
-.hex-row { display: flex; gap: 18px; margin-top: -28px; }
-.hex-row:first-child { margin-top: 0; }
-.hex-tile {
-  width: 160px; height: 140px; border: none; background: transparent; cursor: pointer; position: relative;
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); transition: filter 0.2s ease;
+
+.xp-bar__value {
+  align-self: flex-end;
+  font-size: 12px;
+  color: var(--ch-gold-500);
+  font-weight: 600;
 }
-.hex-tile--unlocked { background: linear-gradient(145deg, var(--ch-gold-950), var(--ch-surface-2) 55%); box-shadow: inset 0 0 0 2px var(--ch-gold-700); }
-.hex-tile--unlocked:hover { box-shadow: inset 0 0 0 2px var(--ch-gold-400), 0 0 24px rgba(244, 162, 39, 0.35); }
-.hex-tile--locked { background: linear-gradient(145deg, #0D0D1F, #08081A); box-shadow: inset 0 0 0 1px rgba(201, 162, 39, 0.15); cursor: not-allowed; filter: grayscale(0.4) brightness(0.6); }
-.hex-tile__inner { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
-.hex-tile__icon { font-size: 28px; }
-.hex-tile__label { font-family: var(--font-sora); font-size: 13px; font-weight: 600; color: var(--ch-gold-100); }
-.hex-tile--locked .hex-tile__label { color: rgba(245, 230, 184, 0.4); }
+
+.hive-map__grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hex-row {
+  display: flex;
+  gap: 18px;
+  margin-top: -28px;
+}
+
+.hex-row:first-child {
+  margin-top: 0;
+}
+
+.hex-tile {
+  width: 160px;
+  height: 140px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  clip-path: polygon(
+    25% 0%,
+    75% 0%,
+    100% 50%,
+    75% 100%,
+    25% 100%,
+    0% 50%
+  );
+  transition: filter 0.2s ease;
+}
+
+.hex-tile--unlocked {
+  background: linear-gradient(
+    145deg,
+    var(--ch-gold-950),
+    var(--ch-surface-2) 55%
+  );
+  box-shadow: inset 0 0 0 2px var(--ch-gold-700);
+}
+
+.hex-tile--unlocked:hover {
+  box-shadow:
+    inset 0 0 0 2px var(--ch-gold-400),
+    0 0 24px rgba(244, 162, 39, 0.35);
+}
+
+.hex-tile--locked {
+  background: linear-gradient(145deg, #0D0D1F, #08081A);
+  box-shadow: inset 0 0 0 1px rgba(201, 162, 39, 0.15);
+  cursor: not-allowed;
+  filter: grayscale(0.4) brightness(0.6);
+}
+
+.hex-tile__inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.hex-tile__icon {
+  font-size: 28px;
+}
+
+.hex-tile__label {
+  font-family: var(--font-sora);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ch-gold-100);
+}
+
+.hex-tile--locked .hex-tile__label {
+  color: rgba(245, 230, 184, 0.4);
+}
 
 /* ============================================
-   HIVE GATE - entry animation before dashboard reveal
+   HIVE GATE — ENTRY ANIMATION
    ============================================ */
 .hive-gate {
   position: fixed;
@@ -119,8 +281,13 @@ html, body {
   align-items: center;
   justify-content: center;
   gap: 20px;
-  background: radial-gradient(circle at 50% 45%, rgba(201, 162, 39, 0.15), #05050F 70%);
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgba(201, 162, 39, 0.15),
+    #05050F 70%
+  );
 }
+
 .hive-gate__text {
   font-family: var(--font-sora);
   font-size: 20px;
@@ -128,20 +295,41 @@ html, body {
   color: var(--ch-gold-100);
   letter-spacing: 0.02em;
 }
+
 .hive-gate__subtext {
   font-size: 13px;
   color: var(--ch-gold-500);
 }
 
 /* ============================================
-   GAMIFIED CRT SCANLINES & RADAR EFFECTS
-/* Radar pulse for interactive CTAs */
+   RADAR EFFECT — JOIN/SIGNUP CTA LINKS ONLY
+   Never apply the radar animation to all buttons.
+   ============================================ */
 @keyframes radar-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
-  70% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.35);
+  }
+
+  70% {
+    box-shadow: 0 0 0 12px rgba(255, 215, 0, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+  }
 }
 
-a[href*="/join"], a[href*="/signup"], button {
+a[href*="/join"],
+a[href*="/signup"] {
   animation: radar-pulse 3s infinite;
+}
+
+/* Accessibility: respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-fade-in-up,
+  a[href*="/join"],
+  a[href*="/signup"] {
+    animation: none;
+  }
 }
